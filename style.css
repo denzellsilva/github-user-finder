@@ -1,4 +1,4 @@
-/* GENERAL STYLES */
+/* || General Styles */
 html {
     box-sizing: border-box;
 }
@@ -14,7 +14,7 @@ body {
     padding: 0;
 }
 
-/* TYPOGRAPHY */
+/* || Typography */
 html {
     font-size: 10px;
 }
@@ -32,7 +32,7 @@ header .logo {
     font-size: 3.2rem;
 }
 
-/* LAYOUT */
+/* || Layout */
 body {
     display: flex;
     align-items: center;
