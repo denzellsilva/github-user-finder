@@ -1,4 +1,4 @@
-/* Box sizing reset (using the alternative box model) */
+/* GENERAL STYLES */
 html {
     box-sizing: border-box;
 }
@@ -9,14 +9,36 @@ html {
 
 body {
     background-color: #1e272e;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* TYPOGRAPHY */
+html {
+    font-size: 10px;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.6;
     color: #e0e6eb;
+}
+
+header .logo {
+    font-family: "Roboto", serif;
+    font-size: 3.2rem;
+}
+
+/* LAYOUT */
+body {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
 }
 
-/* HEADER STYLES */
 header {
     display: flex;
     flex-direction: column;
