@@ -20,7 +20,7 @@ html {
 }
 
 body {
-    font-family: "Inter", sans-serif;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
     font-weight: 400;
     font-style: normal;
     line-height: 1.6;
@@ -28,7 +28,7 @@ body {
 }
 
 header .logo {
-    font-family: "Roboto", sans-serif;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-size: 3.2rem;
 }
 
