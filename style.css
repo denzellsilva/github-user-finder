@@ -1,3 +1,9 @@
+:root {
+    --main-bg-color: #1e272e;
+    --main-font-color: #e0e6eb;
+    --main-border-color: #555c61;
+}
+
 /* || General Styles */
 html {
     box-sizing: border-box;
@@ -8,10 +14,52 @@ html {
 }
 
 body {
-    background-color: #1e272e;
+    background-color: var(--main-bg-color);
     min-height: 100vh;
     margin: 0;
     padding: 0;
+}
+
+header {
+    width: 100%;
+    max-width: 43.5rem;
+}
+
+.search-box {
+    height: 6.2rem;
+    width: 100%;
+    max-width: 43.5rem;
+    border: 1px solid var(--main-border-color);
+    border-radius: 0.9rem;
+    margin-top: 1rem;
+}
+
+button, input {
+    background-color: inherit;
+    border: none;
+    outline: 0 none;
+}
+
+button:focus, input:focus {
+    border: 1px solid var(--main-font-color);
+}
+
+input {
+    min-width: 0;
+    padding-left: 2rem;
+    border-right: 1px solid var(--main-border-color);
+}
+
+input:focus {
+    border-radius: 0.9rem 0 0 0.9rem;
+}
+
+.search-btn {
+    width: 8rem;
+}
+
+.search-btn:focus {
+    border-radius: 0 0.9rem 0.9rem 0;
 }
 
 /* || Typography */
@@ -23,8 +71,9 @@ body {
     font-family: "Inter", Arial, Helvetica, sans-serif;
     font-weight: 400;
     font-style: normal;
+    font-size: 1.6rem;
     line-height: 1.6;
-    color: #e0e6eb;
+    color: var(--main-font-color);
 }
 
 header .logo {
@@ -34,16 +83,33 @@ header .logo {
     font-style: normal;
 }
 
+input[type="text"] {
+    color: inherit;
+    font-size: inherit;
+}
+
 /* || Layout */
+/* Body */
 body {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+/* Header */
 header {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
+}
+ 
+/* Searchbox */
+.search-box {
+    display: flex;
+}
+
+input[type="text"] {
+    flex: 1;
 }
