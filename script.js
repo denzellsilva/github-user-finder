@@ -8,8 +8,6 @@ import { Octokit } from "https://esm.sh/@octokit/core";
 //  auth: 'YOUR_API_KEY'
 // });
 
-// But since this project is only client side, no backend, I'm not capable to hiding a key. Therefore, I chose not providing authorization token.
-
 const octokit = new Octokit();
 
 async function octokitFetchData() {
