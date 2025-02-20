@@ -29,37 +29,31 @@ header {
     height: 6.2rem;
     width: 100%;
     max-width: 43.5rem;
-    border: 1px solid var(--main-border-color);
     border-radius: 0.9rem;
     margin-top: 1rem;
-}
-
-button, input {
-    background-color: inherit;
-    border: none;
-    outline: 0 none;
-}
-
-button:focus, input:focus {
-    border: 1px solid var(--main-font-color);
 }
 
 input {
     min-width: 0;
     padding-left: 2rem;
     border-right: 1px solid var(--main-border-color);
-}
-
-input:focus {
     border-radius: 0.9rem 0 0 0.9rem;
 }
 
 .search-btn {
     width: 8rem;
+    border-radius: 0 0.9rem 0.9rem 0;
+    border-left: none;
 }
 
-.search-btn:focus {
-    border-radius: 0 0.9rem 0.9rem 0;
+button, input {
+    background-color: inherit;
+    border: 1px solid var(--main-border-color);
+    outline: 0 none;
+}
+
+button:focus, input:focus {
+    border: 1px solid var(--main-font-color);
 }
 
 /* || Typography */
