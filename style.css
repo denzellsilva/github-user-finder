@@ -4,106 +4,160 @@
     --main-border-color: #555c61;
 }
 
-/* || General Styles */
-html {
-    box-sizing: border-box;
+@layer initial-style, populated-style;
+
+@layer initial-style {
+    
+    /* || General Styles */
+    html {
+        box-sizing: border-box;
+    }
+    
+    *, *::before, *::after {
+        box-sizing: inherit;
+    }
+    
+    body {
+        background-color: var(--main-bg-color);
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+    
+    header {
+        width: 100%;
+        max-width: 43.5rem;
+        margin: 2rem;
+    }
+    
+    .search-box {
+        height: 6.2rem;
+        width: 100%;
+        max-width: 43.5rem;
+        border-radius: 0.9rem;
+        margin-top: 1rem;
+    }
+    
+    input {
+        min-width: 0;
+        padding-left: 2rem;
+        border-right: 1px solid var(--main-border-color);
+        border-radius: 0.9rem 0 0 0.9rem;
+    }
+    
+    .search-btn {
+        width: 8rem;
+        border-radius: 0 0.9rem 0.9rem 0;
+        border-left: none;
+    }
+    
+    button, input {
+        background-color: inherit;
+        border: 1px solid var(--main-border-color);
+        outline: 0 none;
+    }
+    
+    button:focus, input:focus {
+        border: 1px solid var(--main-font-color);
+    }
+    
+    /* || Typography */
+    html {
+        font-size: 10px;
+    }
+    
+    body {
+        font-family: "Inter", Arial, Helvetica, sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 1.6rem;
+        line-height: 1.6;
+        color: var(--main-font-color);
+    }
+    
+    header .logo {
+        font-family: "Roboto", Arial, Helvetica, sans-serif;
+        font-size: 3.2rem;
+        font-weight: 400;
+        font-style: normal;
+    }
+    
+    input[type="text"] {
+        color: inherit;
+        font-size: inherit;
+    }
+    
+    /* || Layout */
+    /* Body */
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Header */
+    header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+     
+    /* Searchbox */
+    .search-box {
+        display: flex;
+    }
+    
+    input[type="text"] {
+        flex: 1;
+    }
 }
 
-*, *::before, *::after {
-    box-sizing: inherit;
-}
+@layer populated-style {
 
-body {
-    background-color: var(--main-bg-color);
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-}
+    /* || General Styles */
+    .populated header {
+        height: 11rem;
+        padding: 0 6rem;
+        max-width: 100%;
+        margin: 0;
+    }
 
-header {
-    width: 100%;
-    max-width: 43.5rem;
-}
+    .populated .search-box {
+        margin: 0;
+    }
+    
+    /* || Layout */
+    .populated {
+        display: block;
+    }
+    
+    .populated header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+    }
+    
+    .populated header > * {
+        flex: 1;
+    }
 
-.search-box {
-    height: 6.2rem;
-    width: 100%;
-    max-width: 43.5rem;
-    border-radius: 0.9rem;
-    margin-top: 1rem;
-}
-
-input {
-    min-width: 0;
-    padding-left: 2rem;
-    border-right: 1px solid var(--main-border-color);
-    border-radius: 0.9rem 0 0 0.9rem;
-}
-
-.search-btn {
-    width: 8rem;
-    border-radius: 0 0.9rem 0.9rem 0;
-    border-left: none;
-}
-
-button, input {
-    background-color: inherit;
-    border: 1px solid var(--main-border-color);
-    outline: 0 none;
-}
-
-button:focus, input:focus {
-    border: 1px solid var(--main-font-color);
-}
-
-/* || Typography */
-html {
-    font-size: 10px;
-}
-
-body {
-    font-family: "Inter", Arial, Helvetica, sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 1.6rem;
-    line-height: 1.6;
-    color: var(--main-font-color);
-}
-
-header .logo {
-    font-family: "Roboto", Arial, Helvetica, sans-serif;
-    font-size: 3.2rem;
-    font-weight: 400;
-    font-style: normal;
-}
-
-input[type="text"] {
-    color: inherit;
-    font-size: inherit;
-}
-
-/* || Layout */
-/* Body */
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Header */
-header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-}
- 
-/* Searchbox */
-.search-box {
-    display: flex;
-}
-
-input[type="text"] {
-    flex: 1;
+    .populated .logo {
+        order: 1;
+    }
+    
+    .populated .search-box {
+        order: 2;
+        flex: 1 43.5rem;
+    }
+    
+    .populated header .img-logo {
+        order: 3;
+        display: flex;
+        justify-content: right;
+    }
 }
