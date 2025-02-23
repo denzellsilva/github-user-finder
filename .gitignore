@@ -1,1 +1,4 @@
 .env
+
+# ignore local-assets dir - this directory contains files for local development
+local-assets/
