@@ -18,6 +18,7 @@ async function fetchUserData(username) {
   let response;
 
   if (username === '') {
+    // empty string default behavior for local development purposes
     response = await fetch('local-assets/kamranahmedse.json');
   } else {
     response = await fetch(`https://api.github.com/users/${username}`);
