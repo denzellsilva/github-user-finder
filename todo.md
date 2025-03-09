@@ -1,4 +1,5 @@
 # To Do:
 
 - [ ] add search validation
-    - [ ] check if user exists
+    - [ ] 1. check if user exists
+    - [ ] 2. remove empty string default search behavior
