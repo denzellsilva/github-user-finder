@@ -108,10 +108,17 @@
     /* Searchbox */
     .search-box {
         display: flex;
+        position: relative;
     }
     
     input[type="text"] {
         flex: 1;
+    }
+
+    .error {
+        position: absolute;
+        bottom: -3.5rem;
+        left: 2rem;
     }
 }
 
