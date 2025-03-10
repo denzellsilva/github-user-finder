@@ -11,14 +11,17 @@ searchBtn.addEventListener('click', () => {
 
   promise
     .then(data => console.log(data))
-    .catch(error => console.error(`Can't find existing user: ${error}`));
+    .catch(error => {
+      console.error(`Can't find existing user: ${error}`);
+      showUserError(username);
+    });
 })
 
 async function fetchUserData(username) {
   let response;
 
   if (username === '') {
-    // empty string default behavior for local development purposes
+    // empty string default search behavior for local development purposes
     response = await fetch('local-assets/kamranahmedse.json');
   } else {
     response = await fetch(`https://api.github.com/users/${username}`);
@@ -30,4 +33,17 @@ async function fetchUserData(username) {
 
   const data = await response.json();
   return data;
+}
+
+function showUserError(username) {
+  const error = document.querySelector('.error');
+
+  if (error) {
+    error.parentNode.removeChild(error);
+  }
+  
+  const newError = document.createElement('div');
+  newError.setAttribute('class', 'error');
+  newError.textContent = `${username} user not found.`;
+  searchForm.appendChild(newError);
 }
