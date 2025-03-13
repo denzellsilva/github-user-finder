@@ -60,6 +60,10 @@
     button:focus, input:focus {
         border: 1px solid var(--main-font-color);
     }
+
+    main {
+        margin-top: 3rem;
+    }
     
     /* || Typography */
     html {
@@ -130,6 +134,7 @@
         padding: 0 6rem;
         max-width: 100%;
         margin: 0;
+        background-color: inherit;
     }
 
     .populated .search-box {
@@ -146,7 +151,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        position: fixed;
+        position: sticky;
         top: 0;
     }
     
