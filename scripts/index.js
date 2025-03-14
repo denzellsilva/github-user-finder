@@ -4,6 +4,12 @@ const searchForm = document.querySelector('.search-box');
 const searchBtn = document.querySelector('.search-btn');
 const searchInput = document.querySelector('.search-box input');
 const sessionError = sessionStorage.getItem('error');
+const params = new URLSearchParams(window.location.search);
+
+// whitelisting the url - redirect to '/' if the url doesn't have parameters
+if (params.toString()) {
+  window.location.href = '/';
+}
 
 if (sessionError) {
   functions.errorShow(sessionError);
