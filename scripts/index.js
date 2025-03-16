@@ -11,6 +11,7 @@ if (params.toString()) {
   window.location.href = '/';
 }
 
+// flash the value of error there is an error key in the session storage
 if (sessionError) {
   functions.errorShow(sessionError);
 }

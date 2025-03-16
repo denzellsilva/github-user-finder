@@ -5,15 +5,23 @@ const searchBtn = document.querySelector('.search-btn');
 const searchInput = document.querySelector('.search-box input');
 const sessionError = sessionStorage.getItem('error');
 const params = new URLSearchParams(window.location.search);
+const user = params.get('user');
 
 // whitelisting the url - redirect to '/' if the url doesn't have a 'user' parameter
-if (!params.has('user')) {
+if (!params.has('user') || user === '') {
+  sessionStorage.setItem('error', 'Type a username.')
   window.location.href = '/';
 }
 
-if (sessionError) {
-  functions.errorShow(sessionError);
-}
+functions.fetchUserData(user)
+  .then((data) => {
+    functions.populate(data);
+    console.log(data);
+  })
+  .catch(() => {
+    sessionStorage.setItem('error', 'User not found.');
+    window.location.href = '/';
+  });
 
 // remove default form submission behavior
 searchForm.addEventListener('submit', e => e.preventDefault());
@@ -22,7 +30,7 @@ searchBtn.addEventListener('click', () => {
   const username =  searchInput.value.toString();
 
   if (username === '') {
-    functions.errorShow('Type a username');
+    functions.errorShow('Type a username.');
   } else {
     const promise = functions.fetchUserData(username);
   
@@ -36,16 +44,3 @@ searchBtn.addEventListener('click', () => {
   }
 });
 
-const user = params.get('user');
-
-  functions.fetchUserData(user)
-    .then((data) => { 
-      functions.populate(data);
-      console.log(data);
-    })
-    .catch(()=> {
-      sessionStorage.setItem('error', 'User not found.');
-      window.location.href = '/';
-    });
-
-sessionStorage.clear();
