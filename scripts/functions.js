@@ -68,7 +68,7 @@ function buildAccountStats(stats) {
   const section = document.createElement('section');
 
   for (const attribute in stats) {
-      const para = document.createElement('p');
+      const para = document.createElement('span');
       para.textContent = `${attribute}: ${stats[attribute]}`;
       section.appendChild(para);
     }
