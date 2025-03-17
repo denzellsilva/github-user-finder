@@ -48,8 +48,30 @@ export function populate(data) {
   img.setAttribute('src', data['avatar_url']);
   img.setAttribute('alt', `${data['login']}'s github profile picture.`);
   
+  section.appendChild(buildFullName(data['name']));
+  section.appendChild(buildAccountStats( {repos: data['public_repos'], followers: data['followers'], following: data['following']} ));
+
   newMain.appendChild(img);
   newMain.appendChild(section);
 
   body.appendChild(newMain);
+}
+
+function buildFullName(name) {
+  const h2 = document.createElement('h2');
+
+  h2.textContent = name;
+  return h2;
+}
+
+function buildAccountStats(stats) {
+  const section = document.createElement('section');
+
+  for (const attribute in stats) {
+      const para = document.createElement('p');
+      para.textContent = `${attribute}: ${stats[attribute]}`;
+      section.appendChild(para);
+    }
+    
+  return section;
 }

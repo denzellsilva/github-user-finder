@@ -43,4 +43,3 @@ searchBtn.addEventListener('click', () => {
     });
   }
 });
-
