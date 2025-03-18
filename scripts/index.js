@@ -33,9 +33,10 @@ searchBtn.addEventListener('click', () => {
       window.location.href = `/profile.html?user=${username}`;
     })
     .catch((e) => {
-      console.log(e);
-      sessionStorage.setItem('error', 'User not found.');
-      window.location.href = '/';
+      functions.handleFetchError(e, () => {
+        sessionStorage.setItem('error', 'User not found.');
+        window.location.href = '/';
+      });
     });
   }
 });

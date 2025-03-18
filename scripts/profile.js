@@ -18,12 +18,10 @@ functions.fetchUserData(user)
     console.log(data);
   })
   .catch((e) => {
-    if (e.message === 'HTTP error: 404') {
+    functions.handleFetchError(e, () => {
       sessionStorage.setItem('error', 'User not found.');
       window.location.href = '/';
-    } 
-
-    console.log(e);
+    });
   });
 
 // remove default form submission behavior
@@ -42,8 +40,7 @@ searchBtn.addEventListener('click', () => {
       window.location.href = `/profile.html?user=${username}`;
     })
     .catch((e) => {
-      console.log(e);
-      functions.errorShow('User not found.');
+      functions.handleFetchError(e, () => functions.errorShow('User not found.'));
     });
   }
 });
