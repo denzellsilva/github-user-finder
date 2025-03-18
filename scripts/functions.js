@@ -75,3 +75,11 @@ function buildAccountStats(stats) {
     
   return list;
 }
+
+export function handleFetchError(error, func) {
+  if (error.message === 'HTTP error: 404') {
+    func();
+  } else {
+    console.log(error);
+  }
+}
