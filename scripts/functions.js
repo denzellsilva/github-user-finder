@@ -65,13 +65,13 @@ function buildFullName(name) {
 }
 
 function buildAccountStats(stats) {
-  const section = document.createElement('section');
+  const list = document.createElement('ul');
 
   for (const attribute in stats) {
-      const para = document.createElement('span');
-      para.textContent = `${attribute}: ${stats[attribute]}`;
-      section.appendChild(para);
+      const item = document.createElement('li');
+      item.textContent = `${attribute}: ${stats[attribute]}`;
+      list.appendChild(item);
     }
     
-  return section;
+  return list;
 }
