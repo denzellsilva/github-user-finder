@@ -3,7 +3,6 @@ import * as functions from "./functions.js";
 const searchForm = document.querySelector('.search-box');
 const searchBtn = document.querySelector('.search-btn');
 const searchInput = document.querySelector('.search-box input');
-const sessionError = sessionStorage.getItem('error');
 const params = new URLSearchParams(window.location.search);
 const user = params.get('user');
 
@@ -18,9 +17,13 @@ functions.fetchUserData(user)
     functions.populate(data);
     console.log(data);
   })
-  .catch(() => {
-    sessionStorage.setItem('error', 'User not found.');
-    window.location.href = '/';
+  .catch((e) => {
+    if (e.message === 'HTTP error: 404') {
+      sessionStorage.setItem('error', 'User not found.');
+      window.location.href = '/';
+    } 
+
+    console.log(e);
   });
 
 // remove default form submission behavior
@@ -38,7 +41,8 @@ searchBtn.addEventListener('click', () => {
     .then(() => {
       window.location.href = `/profile.html?user=${username}`;
     })
-    .catch(() => {
+    .catch((e) => {
+      console.log(e);
       functions.errorShow('User not found.');
     });
   }

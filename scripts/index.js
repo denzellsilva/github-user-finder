@@ -32,7 +32,8 @@ searchBtn.addEventListener('click', () => {
     .then(() => {
       window.location.href = `/profile.html?user=${username}`;
     })
-    .catch(() => {
+    .catch((e) => {
+      console.log(e);
       sessionStorage.setItem('error', 'User not found.');
       window.location.href = '/';
     });
