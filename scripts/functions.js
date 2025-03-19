@@ -76,7 +76,7 @@ function buildAccountStats(stats) {
   return list;
 }
 
-// returns the line where a funciton is called
+// returns the line where a funciton is called,
 export function functionCallLine() {
   const error = new Error();
   const stackLine = error.stack.split("\n")[2]; // Get the caller's stack trace
@@ -86,11 +86,13 @@ export function functionCallLine() {
 export function buildElement({tag, text = '', attributes = {}}) {
   const element = document.createElement(tag);
 
+  // checks if it's a valid html tag
   if (element.toString() === '[object HTMLUnknownElement]') {
     console.error(`Invalid HTML tag: ${tag} in ${functionCallLine()}`);
     return;
   }
 
+  // loops through the attributes object and checks every attribute if it's a valid html attribute or else show an error
   for (const attribute in attributes) {
     if (attribute === 'class') {
       element.className = attributes[attribute];
@@ -98,11 +100,12 @@ export function buildElement({tag, text = '', attributes = {}}) {
       element.setAttribute(attribute, attributes[attribute]);
     } else {
       console.error(`Invalid attribute: ${attribute} for tag <${tag}> in ${functionCallLine()}`);
+      return;
     }
   }
 
   element.textContent = text;
-  
+
   return element;
 }
 
