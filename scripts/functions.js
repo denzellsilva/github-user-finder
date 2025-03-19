@@ -42,12 +42,20 @@ export function populate(data) {
   
   const body = document.querySelector('body');
   const newMain = document.createElement('main');
-  const img = document.createElement('img');
   const section = document.createElement('section');
-
-  img.setAttribute('src', data['avatar_url']);
-  img.setAttribute('alt', `${data['login']}'s github profile picture.`);
   
+  // const img = document.createElement('img');
+  // img.setAttribute('src', data['avatar_url']);
+  // img.setAttribute('alt', `${data['login']}'s github profile picture.`);
+  
+  const img = buildElement({
+    tag: 'img',
+    attributes: {
+      src: data['avatar_url'],
+      dkfj: `${data['login']}'s github profile picture.`
+    }
+  });
+
   section.appendChild(buildFullName(data['name']));
   section.appendChild(buildAccountStats( {repos: data['public_repos'], followers: data['followers'], following: data['following']} ));
 
@@ -88,7 +96,7 @@ export function buildElement({tag, text = '', attributes = {}}) {
 
   // checks if it's a valid html tag
   if (element.toString() === '[object HTMLUnknownElement]') {
-    console.error(`Invalid HTML tag: ${tag} in ${functionCallLine()}`);
+    console.error(`Invalid HTML tag: ${tag} in buildElement(). Called at: ${functionCallLine()}`);
     return;
   }
 
@@ -99,7 +107,7 @@ export function buildElement({tag, text = '', attributes = {}}) {
     } else if (attribute in element || attribute.startsWith('data-')) {
       element.setAttribute(attribute, attributes[attribute]);
     } else {
-      console.error(`Invalid attribute: ${attribute} for tag <${tag}> in ${functionCallLine()}`);
+      console.error(`Invalid attribute: ${attribute} for tag <${tag}> in buildElement(). Called at: ${functionCallLine()}`);
       return;
     }
   }
