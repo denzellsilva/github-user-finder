@@ -76,6 +76,36 @@ function buildAccountStats(stats) {
   return list;
 }
 
+// returns the line where a funciton is called
+export function functionCallLine() {
+  const error = new Error();
+  const stackLine = error.stack.split("\n")[2]; // Get the caller's stack trace
+  return stackLine.trim();
+}
+
+export function buildElement({tag, text = '', attributes = {}}) {
+  const element = document.createElement(tag);
+
+  if (element.toString() === '[object HTMLUnknownElement]') {
+    console.error(`Invalid HTML tag: ${tag} in ${functionCallLine()}`);
+    return;
+  }
+
+  for (const attribute in attributes) {
+    if (attribute === 'class') {
+      element.className = attributes[attribute];
+    } else if (attribute in element || attribute.startsWith('data-')) {
+      element.setAttribute(attribute, attributes[attribute]);
+    } else {
+      console.error(`Invalid attribute: ${attribute} for tag <${tag}> in ${functionCallLine()}`);
+    }
+  }
+
+  element.textContent = text;
+  
+  return element;
+}
+
 export function handleFetchError(error, func) {
   if (error.message === 'HTTP error: 404') {
     func();
