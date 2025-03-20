@@ -85,7 +85,7 @@ function AdditionalInfo(data) {
         build(['li'], 
         [
           'Blog: ',
-          build(['a'], [data['blog']]),
+          build(['a', {href: data['blog'], target: 'blank'}], [data['blog']]),
         ])
       ]
       : []),
