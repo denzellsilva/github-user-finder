@@ -1,6 +1,6 @@
 export async function fetchUserData(username) {
-  // const response = await fetch(`https://api.github.com/users/${username}`);
-  const response = await fetch('local-assets/kamranahmedse.json')
+  const response = await fetch(`https://api.github.com/users/${username}`);
+  // const response = await fetch('local-assets/kamranahmedse.json')
   if (!response.ok) {
     throw new Error(`HTTP error: ${response.status}`);
   }
@@ -31,21 +31,68 @@ export function errorRemove() {
 
 export function populate(data) {
   const main = document.querySelector('main');
-  const section = document.createElement('section');
-  
-  const img = buildElement({
-    tag: 'img',
-    attributes: {
-      src: data['avatar_url'],
-      alt: `${data['login']}'s github profile picture.`
-    }
-  });
 
-  section.appendChild(buildFullName(data['name']));
-  section.appendChild(buildAccountStats( {repos: data['public_repos'], followers: data['followers'], following: data['following']} ));
+  main.appendChild
+  (
+    build(['div', { class: 'content'}], 
+    [
+      build(['img', { src: data['avatar_url'] }]),
+      build(['h2'], [data['name']]),
 
-  main.appendChild(img);
-  main.appendChild(section);
+      build(['ul'],
+      [
+        build(['li'], [`Repos: ${data['public_repos']}`]),
+        build(['li'], [`Followers: ${data['followers']}`]),
+        build(['li'], [`Following: ${data['following']}`]),
+      ]),
+
+      build(['h3'], 
+      [ 
+        build(['a', {href: `https://github.com/${data['login']}`, target: `blank`}], [`@${data['login']}`])
+      ]),
+
+      build(['p'], [data['bio']]),
+
+      build(['ul'], 
+      [
+        build(['li'], [`Location: ${data['location']}`]),
+
+        
+        // The spread operator is used to flatten the conditional arrays into the parent array. If the condition is true, 
+        // the array is spread into the parent array. If the condition is false, an empty array ([]) is spread, which has no effect.
+        ...(data['blog'] 
+          ? [
+            build(['li'], 
+            [
+              'Blog: ',
+              build(['a'], [data['blog']]),
+            ])
+          ]
+          : []),
+
+        ...(data['company'] 
+        ? [
+          build(['li'], 
+          [
+            'Company',
+            build(['a'], [data['company']]),
+          ])
+        ]
+        : []),
+        ...(data['twitter_username'] 
+        ? [
+          build(['li'], 
+          [
+            'Twitter: ',
+            build(['a', {href: `https://x.com/${data['twitter_username']}`, target: 'blank'}], [data['twitter_username']]),
+          ])
+        ]
+        : []),
+      ]),
+
+    ])
+  );
+
 }
 
 function buildFullName(name) {
@@ -67,6 +114,7 @@ function buildAccountStats(stats) {
   return list;
 }
 
+// handles errors in fetching data
 export function handleFetchError(error, func) {
   if (error.message === 'HTTP error: 404') {
     func();
@@ -82,12 +130,12 @@ export function functionCallLine() {
   return stackLine.trim();
 }
 
-export function buildElement({tag, attributes = {}}, structure = []) {
+export function build([tag, attributes = {}], structure = []) {
   const element = document.createElement(tag);
 
   // checks if it's a valid html tag
   if (element.toString() === '[object HTMLUnknownElement]') {
-    console.error(`Invalid HTML tag: ${tag} in buildElement(). Called at: ${functionCallLine()}`);
+    console.error(`Invalid HTML tag: ${tag} in build(). Called at: ${functionCallLine()}`);
     return;
   }
 
@@ -98,7 +146,7 @@ export function buildElement({tag, attributes = {}}, structure = []) {
     } else if (attribute in element || attribute.startsWith('data-')) {
       element.setAttribute(attribute, attributes[attribute]);
     } else {
-      console.error(`Invalid attribute: ${attribute} for tag <${tag}> in buildElement(). Called at: ${functionCallLine()}`);
+      console.error(`Invalid attribute: ${attribute} for tag <${tag}> in build(). Called at: ${functionCallLine()}`);
       return;
     }
   }
@@ -115,8 +163,9 @@ export function buildElement({tag, attributes = {}}, structure = []) {
       typeof previousNode === 'string' ? textNode = document.createTextNode(` ${node}`) : textNode = document.createTextNode(node);
       element.appendChild(textNode);
     } else {
-      console.error(`Invalid HTML node in array: ${node} in buildElement(). Called at: ${functionCallLine()}`);
+      console.error(`Invalid HTML node in array: ${node} in build(). Called at: ${functionCallLine()}`);
     }
+    // updates previousNode value witht the current value of node before iterating to the next loop
     previousNode = node;
   }
 
