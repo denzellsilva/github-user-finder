@@ -46,8 +46,6 @@ export function populate(data) {
 
   main.appendChild(img);
   main.appendChild(section);
-
-  // body.appendChild(main);
 }
 
 function buildFullName(name) {
@@ -69,6 +67,14 @@ function buildAccountStats(stats) {
   return list;
 }
 
+export function handleFetchError(error, func) {
+  if (error.message === 'HTTP error: 404') {
+    func();
+  } else {
+    console.log(error);
+  }
+}
+
 // returns the line where a funciton is called,
 export function functionCallLine() {
   const error = new Error();
@@ -76,7 +82,7 @@ export function functionCallLine() {
   return stackLine.trim();
 }
 
-export function buildElement({tag, text = '', attributes = {}}) {
+export function buildElement({tag, attributes = {}}, structure = []) {
   const element = document.createElement(tag);
 
   // checks if it's a valid html tag
@@ -97,15 +103,22 @@ export function buildElement({tag, text = '', attributes = {}}) {
     }
   }
 
-  element.textContent = text;
+  // loops through the stucture array and appends every node to the element
+  let previousNode; // tracks previous node
+  for (const node of structure) {
+    if (node instanceof HTMLElement) {
+      // append the node if its an html element
+      element.appendChild(node);
+    } else if (typeof node === 'string') {
+      let textNode;
+      // if the previous node is a text, add a single space on creating the text node.
+      typeof previousNode === 'string' ? textNode = document.createTextNode(` ${node}`) : textNode = document.createTextNode(node);
+      element.appendChild(textNode);
+    } else {
+      console.error(`Invalid HTML node in array: ${node} in buildElement(). Called at: ${functionCallLine()}`);
+    }
+    previousNode = node;
+  }
 
   return element;
-}
-
-export function handleFetchError(error, func) {
-  if (error.message === 'HTTP error: 404') {
-    func();
-  } else {
-    console.log(error);
-  }
 }
