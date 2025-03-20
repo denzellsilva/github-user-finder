@@ -32,67 +32,84 @@ export function errorRemove() {
 export function populate(data) {
   const main = document.querySelector('main');
 
-  main.appendChild
-  (
-    build(['div', { class: 'content'}], 
-    [
-      build(['img', { src: data['avatar_url'] }]),
-      build(['h2'], [data['name']]),
+  const content =
+  build(['div', { class: 'content'}], 
+  [
+    ProfileImage(data),
+    ProfileName(data),
+    ProfileStats(data),
+    ProfileLink(data),
+    ProfileBio(data),
+    AdditionalInfo(data),
+  ]);
+  
+  main.appendChild(content);
+}
 
-      build(['ul'],
+function ProfileImage(data) {
+  return build(['img', { src: data['avatar_url'] }]);
+}
+
+function ProfileName(data) {
+  return build(['h2'], [data['name']]);
+}
+
+function ProfileLink(data) {
+  return build(['h3'], 
+  [ 
+    build(['a', {href: `https://github.com/${data['login']}`, target: `blank`}], [`@${data['login']}`])
+  ]);
+}
+  
+function ProfileBio(data) {
+  return build(['p'], [data['bio']]);
+}
+
+function ProfileStats(data) {
+  return build(['ul'],
+  [
+    build(['li'], [`Repos: ${data['public_repos']}`]),
+    build(['li'], [`Followers: ${data['followers']}`]),
+    build(['li'], [`Following: ${data['following']}`]),
+  ]);
+}
+
+function AdditionalInfo(data) {
+  return build(['ul'], 
+  [
+    build(['li'], [`Location: ${data['location']}`]),
+    // The spread operator is used to flatten the conditional arrays into the parent array. If the condition is true, 
+    // the array is spread into the parent array. If the condition is false, an empty array ([]) is spread, which has no effect.
+    ...(data['blog'] 
+      ? [
+        build(['li'], 
+        [
+          'Blog: ',
+          build(['a'], [data['blog']]),
+        ])
+      ]
+      : []),
+
+    ...(data['company'] 
+    ? [
+      build(['li'], 
       [
-        build(['li'], [`Repos: ${data['public_repos']}`]),
-        build(['li'], [`Followers: ${data['followers']}`]),
-        build(['li'], [`Following: ${data['following']}`]),
-      ]),
+        'Company',
+        build(['a'], [data['company']]),
+      ])
+    ]
+    : []),
 
-      build(['h3'], 
-      [ 
-        build(['a', {href: `https://github.com/${data['login']}`, target: `blank`}], [`@${data['login']}`])
-      ]),
-
-      build(['p'], [data['bio']]),
-
-      build(['ul'], 
+    ...(data['twitter_username'] 
+    ? [
+      build(['li'], 
       [
-        build(['li'], [`Location: ${data['location']}`]),
-
-        
-        // The spread operator is used to flatten the conditional arrays into the parent array. If the condition is true, 
-        // the array is spread into the parent array. If the condition is false, an empty array ([]) is spread, which has no effect.
-        ...(data['blog'] 
-          ? [
-            build(['li'], 
-            [
-              'Blog: ',
-              build(['a'], [data['blog']]),
-            ])
-          ]
-          : []),
-
-        ...(data['company'] 
-        ? [
-          build(['li'], 
-          [
-            'Company',
-            build(['a'], [data['company']]),
-          ])
-        ]
-        : []),
-        ...(data['twitter_username'] 
-        ? [
-          build(['li'], 
-          [
-            'Twitter: ',
-            build(['a', {href: `https://x.com/${data['twitter_username']}`, target: 'blank'}], [data['twitter_username']]),
-          ])
-        ]
-        : []),
-      ]),
-
-    ])
-  );
-
+        'Twitter: ',
+        build(['a', {href: `https://x.com/${data['twitter_username']}`, target: 'blank'}], [data['twitter_username']]),
+      ])
+    ]
+    : []),
+  ]);
 }
 
 // handles errors in fetching data
@@ -111,6 +128,7 @@ export function functionCallLine() {
   return stackLine.trim();
 }
 
+// || The Build Framework
 export function build([tag, attributes = {}], structure = []) {
   const element = document.createElement(tag);
 
