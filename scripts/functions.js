@@ -1,6 +1,6 @@
 export async function fetchUserData(username) {
-  const response = await fetch(`https://api.github.com/users/${username}`);
-
+  // const response = await fetch(`https://api.github.com/users/${username}`);
+  const response = await fetch('local-assets/kamranahmedse.json')
   if (!response.ok) {
     throw new Error(`HTTP error: ${response.status}`);
   }
@@ -29,40 +29,25 @@ export function errorRemove() {
   }
 }
 
-export function removeOldContent() {
-  const main = document.querySelector('main');
-
-  if (main) {
-    main.parentNode.removeChild(main);
-  }
-}
-
 export function populate(data) {
-  removeOldContent();
-  
-  const body = document.querySelector('body');
-  const newMain = document.createElement('main');
+  const main = document.querySelector('main');
   const section = document.createElement('section');
-  
-  // const img = document.createElement('img');
-  // img.setAttribute('src', data['avatar_url']);
-  // img.setAttribute('alt', `${data['login']}'s github profile picture.`);
   
   const img = buildElement({
     tag: 'img',
     attributes: {
       src: data['avatar_url'],
-      dkfj: `${data['login']}'s github profile picture.`
+      alt: `${data['login']}'s github profile picture.`
     }
   });
 
   section.appendChild(buildFullName(data['name']));
   section.appendChild(buildAccountStats( {repos: data['public_repos'], followers: data['followers'], following: data['following']} ));
 
-  newMain.appendChild(img);
-  newMain.appendChild(section);
+  main.appendChild(img);
+  main.appendChild(section);
 
-  body.appendChild(newMain);
+  // body.appendChild(main);
 }
 
 function buildFullName(name) {
