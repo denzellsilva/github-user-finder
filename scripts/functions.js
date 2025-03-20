@@ -1,6 +1,6 @@
 export async function fetchUserData(username) {
-  const response = await fetch(`https://api.github.com/users/${username}`);
-  // const response = await fetch('local-assets/kamranahmedse.json')
+  // const response = await fetch(`https://api.github.com/users/${username}`);
+  const response = await fetch('local-assets/kamranahmedse.json')
   if (!response.ok) {
     throw new Error(`HTTP error: ${response.status}`);
   }
@@ -93,25 +93,6 @@ export function populate(data) {
     ])
   );
 
-}
-
-function buildFullName(name) {
-  const h2 = document.createElement('h2');
-
-  h2.textContent = name;
-  return h2;
-}
-
-function buildAccountStats(stats) {
-  const list = document.createElement('ul');
-
-  for (const attribute in stats) {
-      const item = document.createElement('li');
-      item.textContent = `${attribute}: ${stats[attribute]}`;
-      list.appendChild(item);
-    }
-    
-  return list;
 }
 
 // handles errors in fetching data
