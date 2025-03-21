@@ -1,6 +1,7 @@
 export async function fetchUserData(username) {
-  // const response = await fetch(`https://api.github.com/users/${username}`);
-  const response = await fetch('local-assets/kamranahmedse.json')
+  const response = await fetch(`https://api.github.com/users/${username}`);
+  // const response = await fetch('local-assets/kamranahmedse.json')
+
   if (!response.ok) {
     throw new Error(`HTTP error: ${response.status}`);
   }
@@ -78,37 +79,24 @@ function AdditionalInfo(data) {
   return build(['ul'], 
   [
     build(['li'], [`Location: ${data['location']}`]),
-    // The spread operator is used to flatten the conditional arrays into the parent array. If the condition is true, 
-    // the array is spread into the parent array. If the condition is false, an empty array ([]) is spread, which has no effect.
-    ...(data['blog'] 
-      ? [
-        build(['li'], 
-        [
-          'Blog: ',
-          build(['a', {href: data['blog'], target: 'blank'}], [data['blog']]),
-        ])
-      ]
-      : []),
+    
+    data['company'] ? build(['li'], 
+    [
+      `Company: ${data['company']}`,
+    ])
+    : null,
 
-    ...(data['company'] 
-    ? [
-      build(['li'], 
-      [
-        'Company',
-        build(['a'], [data['company']]),
-      ])
-    ]
-    : []),
+    data['blog'] ? build(['li'], 
+    [
+      'Blog: ', build(['a', { href: data['blog'], target: 'blank' }], [data['blog']]),
+    ])
+    : null,
 
-    ...(data['twitter_username'] 
-    ? [
-      build(['li'], 
-      [
-        'Twitter: ',
-        build(['a', {href: `https://x.com/${data['twitter_username']}`, target: 'blank'}], [data['twitter_username']]),
-      ])
-    ]
-    : []),
+    data['twitter_username'] ? build(['li'], 
+    [
+      'Twitter: ', build(['a', { href: `https://x.com/${data['twitter_username']}`, target: 'blank' }], [data['twitter_username'],]),
+    ])
+    : null,
   ]);
 }
 
@@ -128,7 +116,7 @@ export function functionCallLine() {
   return stackLine.trim();
 }
 
-// || The Build Framework
+// || The Build Functions
 export function build([tag, attributes = {}], structure = []) {
   const element = document.createElement(tag);
 
