@@ -2,8 +2,8 @@
 
 ## Conditionals in Build Function
 You can't use `if-else` or `switch` statements directly within a build function call because this function expects arrays as arguments. Since conditional statements cannot be used inside an array, you need alternative approaches. Here are some methods you can use:
-- Using the Spread Operator - if you want a more explicit and consistent approach.
-- Using Ternary Operator without wrapping build() in Arrays - if you prefer a simpler syntax.
+- [Using the Spread Operator](#using-the-spread-operator) - if you want a more explicit and consistent approach.
+- [Using Ternary Operator without wrapping build() in Arrays](#using-ternary-operator-without-wrapping-in-arrays) - if you prefer a simpler syntax.
 
 ### Using the Spread Operator
 In order to do conditionals in the build function call, you need to use the spread operator (`...`) and ternary operator (`? :`). The spread operator (`...`) flattens the conditional arrays into the parent array. If the condition is `true`, the elements of the array are added directly to the parent array. If the condition is `false`, an empty array (`[]`) is spread, which has no effect.
