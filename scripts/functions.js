@@ -78,7 +78,10 @@ function ProfileStats(data) {
 function AdditionalInfo(data) {
   return build(['ul'], 
   [
-    build(['li'], [`Location: ${data['location']}`]),
+    data['location'] ? build(['li'], 
+    [
+      `Location: ${data['location']}`
+    ]) : null,
     
     data['company'] ? build(['li'], 
     [
