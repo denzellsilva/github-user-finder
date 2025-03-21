@@ -1,8 +1,8 @@
 # Build Function
 
-# What happens if i dont use the spread operator?
+## What happens if we dont use the spread operator?
 
-If you don't use the spread operator (...) in your AdditionalInfo function, the conditional arrays (e.g., for data['blog'], data['company'], and data['twitter_username']) will remain as nested arrays inside the parent array. This can cause issues when the build function processes the structure array because it expects individual nodes, not nested arrays.
+If you don't use the spread operator (`...`) in your AdditionalInfo function, the conditional arrays (e.g., for `data['blog']`, `data['company']`, and `data['twitter_username']`) will remain as nested arrays inside the parent array. This can cause issues when the build function processes the structure array because it expects individual nodes, not nested arrays.
 
 ### Example Without Spread Operator
 
@@ -40,7 +40,7 @@ function AdditionalInfo(data) {
 }
 ```
 
-Resulting structure Array
+### Resulting structure Array
 If `data['blog']`, `data['company']`, or `data['twitter_username']` exist, the structure array will look like this:
 ```js
 [
@@ -51,12 +51,13 @@ If `data['blog']`, `data['company']`, or `data['twitter_username']` exist, the s
 ]
 ```
 
-Notice that the second, third, and fourth elements are nested arrays.
+Notice that the second, third, and fourth elements are **nested arrays**.
 
-What Happens in the build Function
+### What Happens in the build Function
 When the build function processes the structure array, it will encounter these nested arrays. Since the build function expects each element of the structure array to be either an HTMLElement or a string, it will not know how to handle the nested arrays. This will likely result in an error or unexpected behavior.
 
 For example:
+```js
 for (const node of structure) {
   if (node instanceof HTMLElement) {
     element.appendChild(node);
@@ -66,12 +67,16 @@ for (const node of structure) {
     console.error(`Invalid HTML node in array: ${node}`);
   }
 }
+```
 
-- When node is a nested array (e.g., [build(...)]), it will not match instanceof HTMLElement or typeof node === 'string'.
-- The else block will execute, logging an error: Invalid HTML node in array: [object Object].
+- When node is a nested array (e.g., `[build(...)]`), it will not match `instanceof HTMLElement` or `typeof node === 'string'`.
+- The `else` block will execute, logging an error: `Invalid HTML node in array: [object Object]`.
 
-Example With Spread Operator
+## Why the Spread Operator Fixes This
+The spread operator (`...`) flattens the conditional arrays into the parent array. If the condition is `true`, the elements of the array are added directly to the parent array. If the condition is `false`, an empty array (`[]`) is spread, which has no effect.
 
+### Example With Spread Operator
+```js
 function AdditionalInfo(data) {
   return build(['ul'], [
     build(['li'], [`Location: ${data['location']}`]),
@@ -103,5 +108,22 @@ function AdditionalInfo(data) {
       : []),
   ]);
 }
+```
 
-Resulting structure Array
+### Resulting structure Array
+
+If `data['blog']`, `data['company']`, or `data['twitter_username']` exist, the structure array will look like this:
+```js
+[
+  build(['li'], [`Location: ${data['location']}`]),
+  build(['li'], ['Blog: ', build(['a', { href: data['blog'], target: 'blank' }], [data['blog']])]),
+  build(['li'], ['Company: ', build(['a'], [data['company']])]),
+  build(['li'], ['Twitter: ', build(['a', { href: `https://x.com/${data['twitter_username']}`, target: 'blank' }], [data['twitter_username']])]),
+]
+```
+# Summary
+If you don't use the spread operator:
+- Nested arrays will be created in the structure array.
+- The build function will not handle these nested arrays correctly, leading to errors or unexpected behavior.
+
+Using the spread operator ensures that the structure array is flat and contains only valid nodes, making your code work as intended.
