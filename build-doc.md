@@ -194,18 +194,18 @@ If any of the conditions are false, the corresponding element will be `null`:
 
 ### Pros of This Approach
 1. **No Spread Operator Needed**:
-  - You don't need to use the spread operator to flatten arrays.
-  - The array remains flat by design.
+    - You don't need to use the spread operator to flatten arrays.
+    - The array remains flat by design.
 2. **Simpler Syntax**:
-  - The ternary operator directly returns the build function result or `null`, making the code concise.
+    - The ternary operator directly returns the build function result or `null`, making the code concise.
 3. **DOM Compatibility**:
-  - `null` values in the array are ignored when appending child nodes, so they won't cause errors.
+    - `null` values in the array are ignored when appending child nodes, so they won't cause errors.
 
 ### Cons of This Approach
 1. **Less Explicit**
-  - Using `null` as a placeholder for "no element" might not be as explicit as using an empty array with the spread operator.
+    - Using `null` as a placeholder for "no element" might not be as explicit as using an empty array with the spread operator.
 2. **Potential for Confusion:**
-  - Mixing `null` values with valid elements in the array might confuse developers unfamiliar with this pattern.
+    - Mixing `null` values with valid elements in the array might confuse developers unfamiliar with this pattern.
 
 ## Final Recommendation
 Both approaches (using the spread operator or using the ternary operator with `null`) are valid. The choice depends on your team's coding style and preferences:
