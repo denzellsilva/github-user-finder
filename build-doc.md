@@ -1,4 +1,4 @@
-# Using the Spread Operator in Build Function
+# Build Function
 
 ## What happens if we dont use the spread operator?
 
