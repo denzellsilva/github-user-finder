@@ -1,6 +1,6 @@
 export async function fetchUserData(username) {
-  const response = await fetch(`https://api.github.com/users/${username}`);
-  // const response = await fetch('local-assets/kamranahmedse.json')
+  // const response = await fetch(`https://api.github.com/users/${username}`);
+  const response = await fetch('local-assets/kamranahmedse.json')
 
   if (!response.ok) {
     throw new Error(`HTTP error: ${response.status}`);
@@ -81,25 +81,26 @@ function AdditionalInfo(data) {
     data['location'] ? build(['li'], 
     [
       `Location: ${data['location']}`
-    ]) : null,
+    ])
+    : '',
     
     data['company'] ? build(['li'], 
     [
       `Company: ${data['company']}`,
     ])
-    : null,
+    : '',
 
     data['blog'] ? build(['li'], 
     [
       'Blog: ', build(['a', { href: data['blog'], target: 'blank' }], [data['blog']]),
     ])
-    : null,
+    : '',
 
     data['twitter_username'] ? build(['li'], 
     [
       'Twitter: ', build(['a', { href: `https://x.com/${data['twitter_username']}`, target: 'blank' }], [data['twitter_username'],]),
     ])
-    : null,
+    : '',
   ]);
 }
 
@@ -144,7 +145,9 @@ export function build([tag, attributes = {}], structure = []) {
   // loops through the stucture array and appends every node to the element
   let previousNode; // tracks previous node
   for (const node of structure) {
-    if (node instanceof HTMLElement) {
+    if (!node) {
+      continue;
+    } else if (node instanceof HTMLElement) {
       // append the node if its an html element
       element.appendChild(node);
     } else if (typeof node === 'string') {
