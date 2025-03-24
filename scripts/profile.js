@@ -5,6 +5,7 @@ const searchBtn = document.querySelector('.search-btn');
 const searchInput = document.querySelector('.search-box input');
 const params = new URLSearchParams(window.location.search);
 const user = params.get('user');
+const userUrl = `https://api.github.com/users/${user}`;
 
 // whitelisting the url - redirect to '/' if the url doesn't have a 'user' parameter
 if (!params.has('user') || user === '') {
@@ -12,7 +13,7 @@ if (!params.has('user') || user === '') {
   window.location.href = '/';
 }
 
-functions.fetchUserData(user)
+functions.fetchData(userUrl)
   .then((data) => {
     functions.populate(data);
     console.log(data);
@@ -33,7 +34,7 @@ searchBtn.addEventListener('click', () => {
   if (username === '') {
     functions.errorShow('Type a username.');
   } else {
-    const promise = functions.fetchUserData(username);
+    const promise = functions.fetchData(userUrl);
   
     promise
     .then(() => {

@@ -26,7 +26,9 @@ searchBtn.addEventListener('click', () => {
     sessionStorage.setItem('error', 'Type a username.');
     window.location.href = '/';
   } else {
-    const promise = functions.fetchUserData(username);
+    const userUrl = `https://api.github.com/users/${username}`;
+    const promise = functions.fetchData(userUrl);
+
   
     promise
     .then(() => {
