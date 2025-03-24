@@ -1,6 +1,6 @@
-export async function fetchUserData(username) {
-  // const response = await fetch(`https://api.github.com/users/${username}`);
-  const response = await fetch('local-assets/kamranahmedse.json')
+export async function fetchData(request) {
+  const response = await fetch(request);
+  // const response = await fetch('local-assets/kamranahmedse.json')
 
   if (!response.ok) {
     throw new Error(`HTTP error: ${response.status}`);
@@ -10,24 +10,15 @@ export async function fetchUserData(username) {
   return data;
 }
 
-export function errorShow(message = 'Invalid input.') {
-  errorRemove();
+async function fetchRepos(reposUrl) {
+  const response = await fetch(reposUrl);
 
-  const searchForm = document.querySelector('.search-box');
-  const newError = document.createElement('span');
-  
-  newError.setAttribute('class', 'error');
-  newError.textContent = message;
-  
-  searchForm.appendChild(newError);
-}
-
-export function errorRemove() {
-  const error = document.querySelector('.error');
-
-  if (error) {
-    error.parentNode.removeChild(error);
+  if (!response.ok) {
+    throw new Error(`HTTP error: ${response.status}`);
   }
+
+  const data = await response.json();
+  return data;
 }
 
 export function populate(data) {
@@ -61,7 +52,7 @@ function ProfileLink(data) {
     build(['a', {href: `https://github.com/${data['login']}`, target: `blank`}], [`@${data['login']}`])
   ]);
 }
-  
+
 function ProfileBio(data) {
   return build(['p'], [data['bio']]);
 }
@@ -102,6 +93,26 @@ function AdditionalInfo(data) {
     ])
     : '',
   ]);
+}
+
+export function errorShow(message = 'Invalid input.') {
+  errorRemove();
+
+  const searchForm = document.querySelector('.search-box');
+  const newError = document.createElement('span');
+  
+  newError.setAttribute('class', 'error');
+  newError.textContent = message;
+  
+  searchForm.appendChild(newError);
+}
+
+export function errorRemove() {
+  const error = document.querySelector('.error');
+
+  if (error) {
+    error.parentNode.removeChild(error);
+  }
 }
 
 // handles errors in fetching data
