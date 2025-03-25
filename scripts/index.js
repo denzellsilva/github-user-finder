@@ -29,7 +29,6 @@ searchBtn.addEventListener('click', () => {
     const userUrl = `https://api.github.com/users/${username}`;
     const promise = functions.fetchData(userUrl);
 
-  
     promise
     .then(() => {
       window.location.href = `/profile.html?user=${username}`;
