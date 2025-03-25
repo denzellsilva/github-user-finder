@@ -1,18 +1,6 @@
 export async function fetchData(request) {
   const response = await fetch(request);
-  // const response = await fetch('local-assets/kamranahmedse.json')
-
-  if (!response.ok) {
-    throw new Error(`HTTP error: ${response.status}`);
-  }
-
-  const data = await response.json();
-  return data;
-}
-
-async function fetchRepos(reposUrl) {
-  const response = await fetch(reposUrl);
-
+  // const response = await fetch('local-assets/kamranahmedse.json');
   if (!response.ok) {
     throw new Error(`HTTP error: ${response.status}`);
   }
@@ -24,8 +12,7 @@ async function fetchRepos(reposUrl) {
 export function populate(data) {
   const main = document.querySelector('main');
 
-  const content =
-  build(['div', { class: 'content'}], 
+  const content = build(['div', { class: 'content'}], 
   [
     ProfileImage(data),
     ProfileName(data),
@@ -34,8 +21,28 @@ export function populate(data) {
     ProfileBio(data),
     AdditionalInfo(data),
   ]);
-  
-  main.appendChild(content);
+
+  const popularReposUrl = `https://api.github.com/search/repositories?q=user:${data['login']}&sort=stars&order=desc`;
+  const promise = fetchData(popularReposUrl);
+
+  promise
+    .then((repos) => {
+      const popularRepos = repos.items.slice(0, 6);
+      const section = build(['section', { class: 'repos' }], 
+      [
+        build(['h2'], ['Repositories']),
+        RepositoriesList(popularRepos),
+      ]);
+      
+      main.appendChild(section);
+    })
+    .catch((e) => {
+      handleFetchError(e, () => {
+        console.log('User has no repositories to show.');
+      });
+    });
+
+    main.appendChild(content);
 }
 
 function ProfileImage(data) {
@@ -43,11 +50,11 @@ function ProfileImage(data) {
 }
 
 function ProfileName(data) {
-  return build(['h2'], [data['name']]);
+  return build(['h1'], [data['name']]);
 }
 
 function ProfileLink(data) {
-  return build(['h3'], 
+  return build(['h2'], 
   [ 
     build(['a', {href: `https://github.com/${data['login']}`, target: `blank`}], [`@${data['login']}`])
   ]);
@@ -95,6 +102,39 @@ function AdditionalInfo(data) {
   ]);
 }
 
+function RepositoriesList(repos) {
+  function buildListItem(repo) {
+    const listItem = build(['li'], 
+    [
+      build(['a', { href: repo['html_url'], target: 'blank' }], [repo['name']]),
+    ]);
+
+    fetchData(repo['languages_url'])
+      .then((languages) => {
+        const mainLanguage = Object.keys(languages)[0];
+        
+        if (mainLanguage) {
+          listItem.appendChild(build(['p'], [mainLanguage]));
+        }
+      })
+      .catch((e) => {
+        handleFetchError(e, () => {
+          console.log('User has no languages to show.');
+        });
+      })
+      .then(() =>{
+        listItem.appendChild(build(['p'], [repo['description']]));
+      });
+
+
+    return listItem;
+  }
+
+  repos = repos.map(buildListItem);
+
+  return build(['ul'], [...repos]);
+}
+
 export function errorShow(message = 'Invalid input.') {
   errorRemove();
 
@@ -117,7 +157,7 @@ export function errorRemove() {
 
 // handles errors in fetching data
 export function handleFetchError(error, func) {
-  if (error.message === 'HTTP error: 404') {
+  if (error.message === 'HTTP error: 404' || error.message === 'HTTP error: 422' || error.message === 'HTTP error: 403') {
     func();
   } else {
     console.log(error);
