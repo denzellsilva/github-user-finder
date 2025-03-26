@@ -22,6 +22,8 @@ export function populate(data) {
     AdditionalInfo(data),
   ]);
 
+  main.appendChild(content);
+  
   const popularReposUrl = `https://api.github.com/search/repositories?q=user:${data['login']}&sort=stars&order=desc`;
   const promise = fetchData(popularReposUrl);
 
@@ -41,8 +43,6 @@ export function populate(data) {
         console.log('User has no repositories to show.');
       });
     });
-
-    main.appendChild(content);
 }
 
 function ProfileImage(data) {
@@ -98,35 +98,30 @@ function AdditionalInfo(data) {
   ]);
 }
 
+export function roundNumber(number) {
+  if (number >= 1_000_000) {
+    return (number / 1_000_000).toFixed(1) + 'M';
+  } else if (number >= 1_000) {
+    return (number / 1_000).toFixed(1) + 'k';
+  } else {
+    return Math.round(number).toString();
+  }
+}
+
 function RepositoriesList(repos) {
-  function buildListItem(repo) {
+  repos = repos.map((repo) => {
+    const repoStars = roundNumber(repo['stargazers_count']);
+
     const listItem = build(['li'], 
     [
       build(['a', { href: repo['html_url'], target: 'blank' }], [repo['name']]),
+      build(['p'], [`Stars: ${repoStars}`]),
+      repo['language'] && build(['p'], [repo['language']]),
+      repo['description'] && build(['p'], [repo['description']]),
     ]);
 
-    fetchData(repo['languages_url'])
-      .then((languages) => {
-        const mainLanguage = Object.keys(languages)[0];
-        
-        if (mainLanguage) {
-          listItem.appendChild(build(['p'], [mainLanguage]));
-        }
-      })
-      .catch((e) => {
-        handleFetchError(e, () => {
-          console.log('User has no languages to show.');
-        });
-      })
-      .then(() =>{
-        listItem.appendChild(build(['p'], [repo['description']]));
-      });
-
-
     return listItem;
-  }
-
-  repos = repos.map(buildListItem);
+  });
 
   return build(['ul'], [...repos]);
 }
@@ -135,7 +130,9 @@ export function errorShow(message = 'Invalid input.') {
   errorRemove();
 
   const searchForm = document.querySelector('.search-box');
-  const newError = document.createElement('span');
+
+  // Refactor this to use the build function
+  const newError = document.createElement('span'); 
   
   newError.setAttribute('class', 'error');
   newError.textContent = message;
