@@ -5,7 +5,10 @@ const searchBtn = document.querySelector('.search-btn');
 const searchInput = document.querySelector('.search-box input');
 const params = new URLSearchParams(window.location.search);
 const user = params.get('user');
-const userUrl = `https://api.github.com/users/`;
+const userUrl = 'https://api.github.com/users/';
+const reposUrl = `https://api.github.com/search/repositories?q=user:${user}&sort=stars&order=desc`;
+// const userUrl = `../local-assets/kamranahmedse.json`;
+// const reposUrl = `../local-assets/kamranahmedse-repos.json`;
 
 // whitelisting the url - redirect to '/' if the url doesn't have a 'user' parameter
 if (!params.has('user') || user === '') {
@@ -13,8 +16,7 @@ if (!params.has('user') || user === '') {
   window.location.href = '/';
 }
 
-functions.fetchData('../local-assets/kamranahmedse.json')
-// functions.fetchData(userUrl + user)
+functions.fetchAllData([fetch(userUrl + user), fetch(reposUrl)])
   .then((data) => {
     functions.populate(data);
     console.log(data);
@@ -25,7 +27,7 @@ functions.fetchData('../local-assets/kamranahmedse.json')
       window.location.href = '/';
     });
   });
-
+  
 // remove default form submission behavior
 searchForm.addEventListener('submit', e => e.preventDefault());
 
