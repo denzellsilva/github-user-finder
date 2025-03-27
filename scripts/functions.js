@@ -1,5 +1,5 @@
 export async function fetchData(request) {
-  const response = await fetch(request);
+ const response = await fetch(request);
 
   if (!response.ok) {
     throw new Error(`HTTP error: ${response.status}`);
@@ -9,7 +9,20 @@ export async function fetchData(request) {
   return data;
 }
 
-export function populate(data) {
+export async function fetchAllData(requests) {
+  const reponses = await Promise.all(requests)
+
+  for (const response of reponses) {
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+  }
+  
+  const data = await Promise.all(reponses.map((response) => response.json()));
+  return data;
+}
+
+export function populate([data, userRepos]) {
   const main = document.querySelector('main');
 
   const content = build(['div', { class: 'content'}], 
@@ -23,27 +36,15 @@ export function populate(data) {
   ]);
 
   main.appendChild(content);
-  
-  // const popularReposUrl = `../local-assets/kamranahmedse-repos.json`;
-  const popularReposUrl = `https://api.github.com/search/repositories?q=user:${data['login']}&sort=stars&order=desc`;
-  const promise = fetchData(popularReposUrl);
 
-  promise
-    .then((repos) => {
-      const popularRepos = repos.items.slice(0, 6);
-      const section = build(['section', { class: 'repos' }], 
-      [
-        build(['h2'], ['Repositories']),
-        RepositoriesList(popularRepos),
-      ]);
-      
-      content.appendChild(section);
-    })
-    .catch((e) => {
-      handleFetchError(e, () => {
-        console.log('User has no repositories to show.');
-      });
-    });
+  const popularRepos = userRepos.items.slice(0, 6);
+  const section = build(['section', { class: 'repos' }], 
+  [
+    build(['h2'], ['Repositories']),
+    RepositoriesList(popularRepos),
+  ]);
+    
+    content.appendChild(section);
 }
 
 function ProfileImage(data) {
@@ -51,7 +52,10 @@ function ProfileImage(data) {
 }
 
 function ProfileName(data) {
-  return build(['h1'], [data['name']]);
+  return build(['header'], 
+  [
+    build(['h1'], [data['name']])
+  ]);
 }
 
 function ProfileLink(data) {
@@ -151,8 +155,10 @@ export function errorRemove() {
 
 // handles errors in fetching data
 export function handleFetchError(error, func) {
-  if (error.message === 'HTTP error: 404' || error.message === 'HTTP error: 422' || error.message === 'HTTP error: 403') {
+  if (error.message === 'HTTP error: 404' || error.message === 'HTTP error: 422') {
     func();
+  } else if (error.message === 'HTTP error: 403') {
+    errorShow('API rate limit exceeded. Try again later.');
   } else {
     console.log(error);
   }
