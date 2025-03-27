@@ -24,6 +24,7 @@ export async function fetchAllData(requests) {
 
 export function populate([data, userRepos]) {
   const main = document.querySelector('main');
+  const popularRepos = userRepos.items.slice(0, 6);
 
   const content = build(['div', { class: 'content'}], 
   [
@@ -33,18 +34,10 @@ export function populate([data, userRepos]) {
     ProfileLink(data),
     ProfileBio(data),
     AdditionalInfo(data),
+    ReposSection(popularRepos),
   ]);
 
   main.appendChild(content);
-
-  const popularRepos = userRepos.items.slice(0, 6);
-  const section = build(['section', { class: 'repos' }], 
-  [
-    build(['h2'], ['Repositories']),
-    RepositoriesList(popularRepos),
-  ]);
-    
-    content.appendChild(section);
 }
 
 function ProfileImage(data) {
@@ -113,7 +106,7 @@ export function roundNumber(number) {
   }
 }
 
-function RepositoriesList(repos) {
+function ReposSection(repos) {
   repos = repos.map((repo) => {
     const repoStars = roundNumber(repo['stargazers_count']);
 
@@ -128,7 +121,13 @@ function RepositoriesList(repos) {
     return listItem;
   });
 
-  return build(['ul'], [...repos]);
+  const section = build(['section', { class: 'repos' }], 
+  [
+    build(['h2'], ['Repositories']),
+    build(['ul'], [...repos])
+  ]);
+  
+  return section;
 }
 
 export function errorShow(message = 'Invalid input.') {
