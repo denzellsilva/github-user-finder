@@ -13,7 +13,8 @@ if (!params.has('user') || user === '') {
   window.location.href = '/';
 }
 
-functions.fetchData(userUrl + user)
+functions.fetchData('../local-assets/kamranahmedse.json')
+// functions.fetchData(userUrl + user)
   .then((data) => {
     functions.populate(data);
     console.log(data);

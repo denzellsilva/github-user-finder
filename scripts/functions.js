@@ -1,6 +1,6 @@
 export async function fetchData(request) {
   const response = await fetch(request);
-  // const response = await fetch('local-assets/kamranahmedse.json');
+
   if (!response.ok) {
     throw new Error(`HTTP error: ${response.status}`);
   }
@@ -24,6 +24,7 @@ export function populate(data) {
 
   main.appendChild(content);
   
+  // const popularReposUrl = `../local-assets/kamranahmedse-repos.json`;
   const popularReposUrl = `https://api.github.com/search/repositories?q=user:${data['login']}&sort=stars&order=desc`;
   const promise = fetchData(popularReposUrl);
 
