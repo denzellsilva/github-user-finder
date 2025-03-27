@@ -37,7 +37,7 @@ export function populate(data) {
         RepositoriesList(popularRepos),
       ]);
       
-      main.appendChild(section);
+      content.appendChild(section);
     })
     .catch((e) => {
       handleFetchError(e, () => {
