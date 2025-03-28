@@ -127,7 +127,8 @@
 
     /* || Pre-loader styles */
     .cssload-container{
-        position:relative;
+        position:absolute;
+        top: 50%;
     }
         
     .cssload-whirlpool,
