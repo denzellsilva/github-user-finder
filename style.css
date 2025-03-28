@@ -26,8 +26,8 @@
     
     .main-header {
         width: 100%;
-        max-width: 43.5rem;
-        margin: 2rem;
+        max-width: 45.5rem;
+        padding: 2rem;
     }
     
     .search-box {
