@@ -9,7 +9,7 @@ export async function fetchData(request) {
   return data;
 }
 
-export async function fetchAllData(requests) {
+export async function fetchAll(requests) {
   const reponses = await Promise.all(requests)
 
   for (const response of reponses) {
@@ -28,12 +28,18 @@ export function populate([data, userRepos]) {
 
   const content = build(['div', { class: 'content'}], 
   [
-    ProfileImage(data),
-    ProfileName(data),
-    ProfileStats(data),
-    ProfileLink(data),
-    ProfileBio(data),
-    AdditionalInfo(data),
+    build(['header', { class: 'profile-header' }], 
+    [
+      ProfileImage(data),
+      build(['section', { class: 'profile-info' }], 
+      [
+        ProfileName(data),
+        ProfileStats(data),
+        ProfileLink(data),
+        ProfileBio(data),
+        AdditionalInfo(data),
+      ])
+    ]),
     ReposSection(popularRepos),
   ]);
 
