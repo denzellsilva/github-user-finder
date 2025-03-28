@@ -19,6 +19,7 @@ if (!params.has('user') || user === '') {
 
 functions.fetchAll([fetch(userUrl + user), fetch(reposUrl)])
   .then((data) => {
+    functions.hideLoader();
     functions.populate(data);
   })
   .catch((e) => {

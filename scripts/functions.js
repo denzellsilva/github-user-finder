@@ -220,3 +220,8 @@ export function build([tag, attributes = {}], structure = []) {
 
   return element;
 }
+
+export function hideLoader() {
+  const loader = document.querySelector('.cssload-container');
+  loader.parentNode.removeChild(loader);
+}
