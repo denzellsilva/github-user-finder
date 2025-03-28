@@ -127,7 +127,6 @@
 }
 
 @layer populated-style {
-
     /* || General Styles */
     .populated .main-header {
         height: 11rem;
@@ -137,14 +136,25 @@
         background-color: inherit;
     }
 
-    .populated main
+    .populated main {
+        width: 100%;
+        max-width: 109rem;
+        margin-top: 15rem;
+        padding: 0 2rem;
+    }
+
     .populated .search-box {
         margin: 0;
+    }
+
+    .profile-info {
+        max-width: 62rem;
     }
     
     /* || Layout */
     .populated {
-        display: block;
+        display: flex;
+        justify-content: center;
     }
     
     .populated .main-header {
@@ -152,7 +162,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        position: sticky;
+        position: fixed;
         top: 0;
     }
     
@@ -173,5 +183,16 @@
         order: 3;
         display: flex;
         justify-content: right;
+    }
+
+    .populated .profile-header {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        gap: 5rem;
+    }
+
+    .profile-info {
+        flex: 1;
     }
 }
