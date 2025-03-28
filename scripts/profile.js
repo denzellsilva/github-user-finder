@@ -4,12 +4,12 @@ const searchForm = document.querySelector('.search-box');
 const searchBtn = document.querySelector('.search-btn');
 const searchInput = document.querySelector('.search-box input');
 const params = new URLSearchParams(window.location.search);
-// const user = params.get('user');
-// const userUrl = 'https://api.github.com/users/';
-// const reposUrl = `https://api.github.com/search/repositories?q=user:${user}&sort=stars&order=desc`;
-const user = `kamranahmedse.json`;
-const userUrl = `../local-assets/`;
-const reposUrl = `../local-assets/kamranahmedse-repos.json`;
+const user = params.get('user');
+const userUrl = 'https://api.github.com/users/';
+const reposUrl = `https://api.github.com/search/repositories?q=user:${user}&sort=stars&order=desc`;
+// const user = `kamranahmedse.json`;
+// const userUrl = `../local-assets/`;
+// const reposUrl = `../local-assets/kamranahmedse-repos.json`;
 
 // whitelisting the url - redirect to '/' if the url doesn't have a 'user' parameter
 if (!params.has('user') || user === '') {
@@ -20,7 +20,6 @@ if (!params.has('user') || user === '') {
 functions.fetchAll([fetch(userUrl + user), fetch(reposUrl)])
   .then((data) => {
     functions.populate(data);
-    // console.log(data);
   })
   .catch((e) => {
     functions.handleFetchError(e, () => {
