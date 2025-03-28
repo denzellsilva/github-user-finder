@@ -10,21 +10,19 @@ export async function fetchData(request) {
 }
 
 export async function fetchAll(requests) {
-  const reponses = await Promise.all(requests)
+  const responses = await Promise.all(requests)
 
-  for (const response of reponses) {
-    if (!response.ok) {
-      throw new Error(`HTTP error: ${response.status}`);
-    }
+  // check only the first response for errors because the other request is not needed if it fails
+  if (!responses[0].ok) {
+    throw new Error(`HTTP error: ${response.status}`);
   }
   
-  const data = await Promise.all(reponses.map((response) => response.json()));
+  const data = await Promise.all(responses.map((response) => response.json()));
   return data;
 }
 
 export function populate([data, userRepos]) {
   const main = document.querySelector('main');
-  const popularRepos = userRepos.items.slice(0, 6);
 
   const content = build(['div', { class: 'content'}], 
   [
@@ -39,11 +37,17 @@ export function populate([data, userRepos]) {
         ProfileBio(data),
         AdditionalInfo(data),
       ])
-    ]),
-    ReposSection(popularRepos),
+    ])
   ]);
 
   main.appendChild(content);
+
+  // only show the repos section if there are any repos
+  if (userRepos.items.length > 0) {
+    const popularRepos = userRepos.items.slice(0, 6);
+    const reposSection = ReposSection(popularRepos);
+    main.appendChild(reposSection);
+  }
 }
 
 function ProfileImage(data) {
