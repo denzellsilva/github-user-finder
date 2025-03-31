@@ -247,10 +247,13 @@
     .profile-header img {
         margin: 0 auto;
     }
+
+    .populated h1 {
+        border-bottom: 1px solid var(--main-border-color);
+    }
     
     /* || Typography */
     .populated h1 {
-        border-bottom: 1px solid var(--main-border-color);
         font-size: 4.4rem;
     }
 
