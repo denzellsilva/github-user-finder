@@ -316,4 +316,11 @@
     .profile-info {
         flex: 1;
     }
+
+    .profile-stats {
+        display: flex;
+        align-items: start;
+        justify-content: start;
+        gap: 6rem;
+    }
 }
