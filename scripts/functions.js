@@ -14,10 +14,10 @@ export async function fetchAll(requests) {
 
   // check only the first response for errors because the other request is not needed if it fails
   if (!responses[0].ok) {
-    throw new Error(`HTTP error: ${response.status}`);
+    throw new Error(`HTTP error: ${responses[0].status}`);
   }
   
-  const data = await Promise.all(responses.map((response) => response.json()));
+  const data = await Promise.all(responses.map(response => response.json()));
   return data;
 }
 
@@ -173,7 +173,7 @@ export function handleFetchError(error, func) {
   }
 }
 
-// returns the line where a funciton is called,
+// returns the line where a function is called,
 export function functionCallLine() {
   const error = new Error();
   const stackLine = error.stack.split("\n")[2]; // Get the caller's stack trace
@@ -202,7 +202,7 @@ export function build([tag, attributes = {}], structure = []) {
     }
   }
 
-  // loops through the stucture array and appends every node to the element
+  // loops through the structure array and appends every node to the element
   let previousNode; // tracks previous node
   for (const node of structure) {
     if (!node) {
@@ -218,7 +218,7 @@ export function build([tag, attributes = {}], structure = []) {
     } else {
       console.error(`Invalid HTML node in array: ${node} in build(). Called at: ${functionCallLine()}`);
     }
-    // updates previousNode value witht the current value of node before iterating to the next loop
+    // updates previousNode value with the current value of node before iterating to the next loop
     previousNode = node;
   }
 
