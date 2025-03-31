@@ -64,6 +64,10 @@
     main {
         margin-top: 3rem;
     }
+
+    h1, h2 {
+        margin: 0;
+    }
     
     /* || Typography */
     html {
@@ -78,7 +82,7 @@
         line-height: 1.6;
         color: var(--main-font-color);
     }
-    
+   
     .primary-header .logo {
         font-family: "Roboto", Arial, Helvetica, sans-serif;
         font-size: 3.2rem;
@@ -236,6 +240,10 @@
     .profile-info {
         max-width: 62rem;
     }
+
+    .profile-header img {
+        margin: 0 auto;
+    }
     
     /* || Layout */
     .populated {
@@ -275,7 +283,7 @@
     .populated .profile-header {
         display: flex;
         flex-flow: row wrap;
-        justify-content: center;
+        justify-content: space-between;
         gap: 5rem;
     }
 
