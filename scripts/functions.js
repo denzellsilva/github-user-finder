@@ -75,9 +75,9 @@ function ProfileBio(data) {
 function ProfileStats(data) {
   return build(['ul'],
   [
-    build(['li'], [`Repos: ${data['public_repos']}`]),
-    build(['li'], [`Followers: ${data['followers']}`]),
-    build(['li'], [`Following: ${data['following']}`]),
+    build(['li'], [`${roundNumber(data['public_repos'])} repos`]),
+    build(['li'], [`${roundNumber(data['followers'])} followers`]),
+    build(['li'], [`${roundNumber(data['following'])} following`]),
   ]);
 }
 
