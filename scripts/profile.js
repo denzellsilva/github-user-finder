@@ -15,6 +15,7 @@ const reposUrl = `https://api.github.com/search/repositories?q=user:${user}&sort
 if (!params.has('user') || user === '') {
   sessionStorage.setItem('error', 'Type a username.')
   // window.location.href = '/';
+  window.location.href = '/github-user-finder/';
 }
 
 functions.fetchAll([fetch(userUrl + user), fetch(reposUrl)])
@@ -26,6 +27,7 @@ functions.fetchAll([fetch(userUrl + user), fetch(reposUrl)])
     functions.handleFetchError(e, () => {
       sessionStorage.setItem('error', 'User not found.');
       // window.location.href = '/';
+      window.location.href = '/github-user-finder/';
     });
   });
 
@@ -42,7 +44,8 @@ searchBtn.addEventListener('click', () => {
   
     promise
     .then(() => {
-      window.location.href = `/profile.html?user=${username}`;
+      // window.location.href = `/profile.html?user=${username}`;
+      window.location.href = `/github-user-finder/profile.html?user=${username}`;
     })
     .catch((e) => {
       functions.handleFetchError(e, () => functions.errorShow('User not found.'));

@@ -33,12 +33,13 @@ searchBtn.addEventListener('click', () => {
     promise
     .then(() => {
       // window.location.href = `/profile.html?user=${username}`;
-      window.location.href = `/profile.html`;
+      window.location.href = `/github-user-finder/profile.html?user=${username}`;
     })
     .catch((e) => {
       functions.handleFetchError(e, () => {
         sessionStorage.setItem('error', 'User not found.');
-        window.location.href = '/';
+        // window.location.href = '/';
+        window.location.reload = `/github-user-finder/`;
       });
     });
   }
