@@ -2,7 +2,7 @@ export function basePath(path) {
   const host = document.location.hostname;
 
   if (host === 'denzellsilva.github.io') {
-    const basePath = '/github-user-search';
+    const basePath = '/github-user-finder';
     return basePath + path;
   }
 
