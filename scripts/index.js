@@ -1,4 +1,5 @@
 import * as functions from "./functions.js";
+import { basePath } from "./functions.js";
 
 const searchForm = document.querySelector('.search-box');
 const searchBtn = document.querySelector('.search-btn');
@@ -6,9 +7,9 @@ const searchInput = document.querySelector('.search-box input');
 const sessionError = sessionStorage.getItem('error');
 const params = new URLSearchParams(window.location.search);
 
-// whitelisting the url - redirect to '/' if the url doesn't have parameters
+// whitelisting the url - redirect to '/' if the url have parameters
 if (params.toString()) {
-  window.location.href = '/';
+  window.location.href = basePath('/');
 }
 
 // flash the value of error there is an error key in the session storage
@@ -32,14 +33,15 @@ searchBtn.addEventListener('click', () => {
 
     promise
     .then(() => {
+      window.location.href = basePath(`/profile.html?user=${username}`);
       // window.location.href = `/profile.html?user=${username}`;
-      window.location.href = `/github-user-finder/profile.html?user=${username}`;
+      // window.location.href = `/github-user-finder/profile.html?user=${username}`;
     })
     .catch((e) => {
       functions.handleFetchError(e, () => {
         sessionStorage.setItem('error', 'User not found.');
-        // window.location.href = '/';
-        window.location.reload = `/github-user-finder/`;
+        window.location.href = basePath('/');
+        // window.location.reload = `/github-user-finder/`;
       });
     });
   }

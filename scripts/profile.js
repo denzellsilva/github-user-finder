@@ -1,4 +1,5 @@
 import * as functions from "./functions.js";
+import { basePath } from "./functions.js";
 
 const searchForm = document.querySelector('.search-box');
 const searchBtn = document.querySelector('.search-btn');
@@ -14,8 +15,8 @@ const reposUrl = `https://api.github.com/search/repositories?q=user:${user}&sort
 // whitelisting the url - redirect to '/' if the url doesn't have a 'user' parameter
 if (!params.has('user') || user === '') {
   sessionStorage.setItem('error', 'Type a username.')
-  // window.location.href = '/';
-  window.location.href = '/github-user-finder/';
+  window.location.href = basePath('/');
+  // window.location.href = '/github-user-finder/';
 }
 
 functions.fetchAll([fetch(userUrl + user), fetch(reposUrl)])
@@ -26,8 +27,8 @@ functions.fetchAll([fetch(userUrl + user), fetch(reposUrl)])
   .catch((e) => {
     functions.handleFetchError(e, () => {
       sessionStorage.setItem('error', 'User not found.');
-      // window.location.href = '/';
-      window.location.href = '/github-user-finder/';
+      window.location.href = basePath('/');
+      // window.location.href = '/github-user-finder/';
     });
   });
 
@@ -44,8 +45,8 @@ searchBtn.addEventListener('click', () => {
   
     promise
     .then(() => {
-      // window.location.href = `/profile.html?user=${username}`;
-      window.location.href = `/github-user-finder/profile.html?user=${username}`;
+      window.location.href = basePath(`/profile.html?user=${username}`);
+      // window.location.href = `/github-user-finder/profile.html?user=${username}`;
     })
     .catch((e) => {
       functions.handleFetchError(e, () => functions.errorShow('User not found.'));

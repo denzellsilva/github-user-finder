@@ -1,3 +1,10 @@
+export function basePath(path) {
+  const basePath = '/github-user-finder/';
+  // const basePath = '';
+
+  return basePath + path;
+}
+
 export async function fetchData(request) {
  const response = await fetch(request);
 
