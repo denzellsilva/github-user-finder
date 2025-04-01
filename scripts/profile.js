@@ -51,3 +51,5 @@ searchBtn.addEventListener('click', () => {
   }
 });
 
+
+console.log(document.location.hostname);
