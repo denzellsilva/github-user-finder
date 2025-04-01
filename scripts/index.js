@@ -32,7 +32,8 @@ searchBtn.addEventListener('click', () => {
 
     promise
     .then(() => {
-      window.location.href = `/profile.html?user=${username}`;
+      // window.location.href = `/profile.html?user=${username}`;
+      window.location.href = `/profile.html`;
     })
     .catch((e) => {
       functions.handleFetchError(e, () => {

@@ -14,7 +14,7 @@ const reposUrl = `https://api.github.com/search/repositories?q=user:${user}&sort
 // whitelisting the url - redirect to '/' if the url doesn't have a 'user' parameter
 if (!params.has('user') || user === '') {
   sessionStorage.setItem('error', 'Type a username.')
-  window.location.href = '/';
+  // window.location.href = '/';
 }
 
 functions.fetchAll([fetch(userUrl + user), fetch(reposUrl)])
@@ -25,7 +25,7 @@ functions.fetchAll([fetch(userUrl + user), fetch(reposUrl)])
   .catch((e) => {
     functions.handleFetchError(e, () => {
       sessionStorage.setItem('error', 'User not found.');
-      window.location.href = '/';
+      // window.location.href = '/';
     });
   });
 
