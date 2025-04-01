@@ -25,7 +25,7 @@ searchBtn.addEventListener('click', () => {
 
   if (username === '') {
     sessionStorage.setItem('error', 'Type a username.');
-    window.location.href = '/';
+    window.location.href = basePath('/');
   } else {
     // const userUrl = `../local-assets/kamranahmedse.json`;
     const userUrl = `https://api.github.com/users/${username}`;
@@ -34,14 +34,11 @@ searchBtn.addEventListener('click', () => {
     promise
     .then(() => {
       window.location.href = basePath(`/profile.html?user=${username}`);
-      // window.location.href = `/profile.html?user=${username}`;
-      // window.location.href = `/github-user-finder/profile.html?user=${username}`;
     })
     .catch((e) => {
       functions.handleFetchError(e, () => {
         sessionStorage.setItem('error', 'User not found.');
         window.location.href = basePath('/');
-        // window.location.reload = `/github-user-finder/`;
       });
     });
   }
