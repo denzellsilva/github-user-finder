@@ -1,5 +1,5 @@
 export function basePath(path) {
-  const basePath = '/github-user-finder/';
+  const basePath = '/github-user-finder';
   // const basePath = '';
 
   return basePath + path;
