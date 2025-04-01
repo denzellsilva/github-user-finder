@@ -1,8 +1,12 @@
 export function basePath(path) {
-  const basePath = '/github-user-finder';
-  // const basePath = '';
+  const host = document.location.hostname;
 
-  return basePath + path;
+  if (host === 'denzellsilva.github.io') {
+    const basePath = '/github-user-search';
+    return basePath + path;
+  }
+
+  return path;
 }
 
 export async function fetchData(request) {
