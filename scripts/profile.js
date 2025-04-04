@@ -1,5 +1,4 @@
-import * as functions from "./functions.js";
-import { basePath } from "./functions.js";
+import { basePath, fetchAll, fetchData, errorShow, handleFetchError, hideLoader, populate } from "./functions.js";
 
 const searchForm = document.querySelector('.search-box');
 const searchBtn = document.querySelector('.search-btn');
@@ -18,13 +17,13 @@ if (!params.has('user') || user === '') {
   window.location.href = basePath('/');
 }
 
-functions.fetchAll([fetch(userUrl + user), fetch(reposUrl)])
+fetchAll([fetch(userUrl + user), fetch(reposUrl)])
   .then((data) => {
-    functions.hideLoader();
-    functions.populate(data);
+    hideLoader();
+    populate(data);
   })
   .catch((e) => {
-    functions.handleFetchError(e, () => {
+    handleFetchError(e, () => {
       sessionStorage.setItem('error', 'User not found.');
       window.location.href = basePath('/');
     });
@@ -37,16 +36,16 @@ searchBtn.addEventListener('click', () => {
   const username =  searchInput.value.toString();
 
   if (username === '') {
-    functions.errorShow('Type a username.');
+    errorShow('Type a username.');
   } else {
-    const promise = functions.fetchData(userUrl + username);
+    const promise = fetchData(userUrl + username);
   
     promise
     .then(() => {
       window.location.href = basePath(`/profile.html?user=${username}`);
     })
     .catch((e) => {
-      functions.handleFetchError(e, () => functions.errorShow('User not found.'));
+      handleFetchError(e, () => errorShow('User not found.'));
     });
   }
 });

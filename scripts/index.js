@@ -1,5 +1,4 @@
-import * as functions from "./functions.js";
-import { basePath } from "./functions.js";
+import { basePath, fetchData, errorShow, handleFetchError } from "./functions.js";
 
 const searchForm = document.querySelector('.search-box');
 const searchBtn = document.querySelector('.search-btn');
@@ -14,7 +13,7 @@ if (params.toString()) {
 
 // flash the value of error there is an error key in the session storage
 if (sessionError) {
-  functions.errorShow(sessionError);
+  errorShow(sessionError);
 }
 
 // remove default form submission behavior
@@ -29,14 +28,14 @@ searchBtn.addEventListener('click', () => {
   } else {
     // const userUrl = `../local-assets/kamranahmedse.json`;
     const userUrl = `https://api.github.com/users/${username}`;
-    const promise = functions.fetchData(userUrl);
+    const promise = fetchData(userUrl);
 
     promise
     .then(() => {
       window.location.href = basePath(`/profile.html?user=${username}`);
     })
     .catch((e) => {
-      functions.handleFetchError(e, () => {
+      handleFetchError(e, () => {
         sessionStorage.setItem('error', 'User not found.');
         window.location.href = basePath('/');
       });
