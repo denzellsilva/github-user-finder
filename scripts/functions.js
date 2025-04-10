@@ -9,15 +9,14 @@ export function basePath(path) {
   return path;
 }
 
-export async function fetchData(request) {
+export async function fetchUser(request) {
   const response = await fetch(request);
 
   if (!response.ok) {
     throw new Error(`HTTP error: ${response.status}`);
   }
 
-  const data = await response.json();
-  return data;
+  return response.ok;
 }
 
 export async function fetchAll(requests) {
@@ -54,7 +53,7 @@ export function populate([data, userRepos]) {
   main.appendChild(content);
 
   // only show the repos section if there are any repos
-  if (userRepos.items.length > 0) {
+  if (userRepos.items) {
     const popularRepos = userRepos.items.slice(0, 6);
     const reposSection = ReposSection(popularRepos);
     main.appendChild(reposSection);
@@ -174,12 +173,26 @@ export function errorRemove() {
 
 // handles errors in fetching data
 export function handleFetchError(error, func) {
-  if (error.message === 'HTTP error: 404' || error.message === 'HTTP error: 422') {
-    func();
-  } else if (error.message === 'HTTP error: 403') {
-    errorShow('API rate limit exceeded. Try again later.');
-  } else {
-    console.log(error);
+  switch (error.message) {
+    case 'HTTP error: 404':
+      // call the callback function if the error is 404 - this means the user is not found
+      func();
+      break;
+  
+    case 'HTTP error: 422':
+      // 422 error means the resources do not exist or you do not have permission to view them
+      console.error('The resources do not exist or you do not have permission to view them.');
+      break;
+  
+    case 'HTTP error: 403':
+      // 403 error means the API rate limit has been exceeded
+      errorShow('API rate limit exceeded. Try again later.');
+      break;
+  
+    default:
+      // other errors are logged to the console
+      console.log(error);
+      break;
   }
 }
 

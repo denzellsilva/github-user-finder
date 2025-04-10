@@ -1,4 +1,4 @@
-import { basePath, fetchData, errorShow, handleFetchError } from "./functions.js";
+import { basePath, fetchUser, errorShow, handleFetchError } from "./functions.js";
 
 const searchForm = document.querySelector('.search-box');
 const searchBtn = document.querySelector('.search-btn');
@@ -28,7 +28,7 @@ searchBtn.addEventListener('click', () => {
   } else {
     // const userUrl = `../local-assets/kamranahmedse.json`;
     const userUrl = `https://api.github.com/users/${username}`;
-    const promise = fetchData(userUrl);
+    const promise = fetchUser(userUrl);
 
     promise
     .then(() => {

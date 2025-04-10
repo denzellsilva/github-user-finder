@@ -1,4 +1,4 @@
-import { basePath, fetchAll, fetchData, errorShow, handleFetchError, hideLoader, populate } from "./functions.js";
+import { basePath, fetchAll, fetchUser, errorShow, handleFetchError, hideLoader, populate } from "./functions.js";
 
 const searchForm = document.querySelector('.search-box');
 const searchBtn = document.querySelector('.search-btn');
@@ -38,7 +38,7 @@ searchBtn.addEventListener('click', () => {
   if (username === '') {
     errorShow('Type a username.');
   } else {
-    const promise = fetchData(userUrl + username);
+    const promise = fetchUser(userUrl + username);
   
     promise
     .then(() => {
