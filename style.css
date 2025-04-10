@@ -20,6 +20,7 @@
     
     body {
         background-color: var(--main-bg-color);
+        height: 100%;
         min-height: 100vh;
         margin: 0;
         padding: 0;
@@ -354,7 +355,9 @@
     /* || Responsive */
     @media screen and (max-width: 480px) {
         /* || General Styles */
-
+        .populated main {
+            padding: 0 1.6rem;
+        }
         /* || Layout */
         .profile-header {
             flex-direction: column;
