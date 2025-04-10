@@ -116,14 +116,14 @@ Notice that in the first ternary operation, the `build()` is called multiple tim
 ```js
 [
   build(['li'], [`Location: ${data['location']}`]),
-  build(['li'], [`Follwers: ${data['follwers']}`]),
+  build(['li'], [`Followers: ${data['followers']}`]),
   build(['li'], ['Company: ', build(['a'], [data['company']])]),
   build(['li'], ['Blog: ', build(['a', { href: data['blog'], target: 'blank' }], [data['blog']])]),
   build(['li'], ['Twitter: ', build(['a', { href: `https://x.com/${data['twitter_username']}`, target: 'blank' }], [data['twitter_username']])]),
 ]
 ```
 
-### What happens if we dont use the spread operator?
+### What happens if we don't use the spread operator?
 If you don't use the spread operator (`...`) in your AdditionalInfo function, the conditional arrays (e.g., for `data['location']`, `data['company']`, `data['blog']`, and `data['twitter_username']`) will remain as nested arrays inside the parent array. This can cause issues when the build function processes the structure array because it expects individual nodes, not nested arrays.
 
 ### Example Without Spread Operator
@@ -205,7 +205,7 @@ let previousNode; // tracks previous node
     } else {
       console.error(`Invalid HTML node in array: ${node} in build(). Called at: ${functionCallLine()}`);
     }
-    // updates previousNode value witht the current value of node before iterating to the next loop
+    // updates previousNode value width the current value of node before iterating to the next loop
     previousNode = node;
   }
 ```

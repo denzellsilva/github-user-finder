@@ -10,7 +10,7 @@ export function basePath(path) {
 }
 
 export async function fetchData(request) {
- const response = await fetch(request);
+  const response = await fetch(request);
 
   if (!response.ok) {
     throw new Error(`HTTP error: ${response.status}`);
@@ -154,15 +154,14 @@ function ReposSection(repos) {
 export function errorShow(message = 'Invalid input.') {
   errorRemove();
 
-  const searchForm = document.querySelector('.search-box');
-
-  // Refactor this to use the build function
-  const newError = document.createElement('span'); 
+  const primaryHeader = document.querySelector('.primary-header');
   
-  newError.setAttribute('class', 'error');
-  newError.textContent = message;
+  const newError = build(['div', { class: 'error' }], 
+  [
+    build(['span'], [message]),
+  ]);
   
-  searchForm.appendChild(newError);
+  primaryHeader.appendChild(newError);
 }
 
 export function errorRemove() {
@@ -191,7 +190,7 @@ export function functionCallLine() {
   return stackLine.trim();
 }
 
-// || The Build Functions
+// || The Build Function
 export function build([tag, attributes = {}], structure = []) {
   const element = document.createElement(tag);
 
