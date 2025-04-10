@@ -268,7 +268,7 @@
 
 @layer populated-style {
     /* || General Styles */
-    body {
+    .populated {
         overflow-y: revert; /* goes back to browser's default overflow-y property value*/
     }
     
