@@ -261,7 +261,7 @@
 @layer populated-style {
     /* || General Styles */
     body {
-        overflow-y: unset;
+        overflow-y: revert;
     }
     
     .populated .primary-header {
