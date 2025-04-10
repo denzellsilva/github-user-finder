@@ -12,6 +12,7 @@
     /* || General Styles */
     html {
         box-sizing: border-box;
+        overflow: hidden;
     }
     
     *, *::before, *::after {
@@ -23,7 +24,15 @@
         min-height: 100svh;
         margin: 0;
         padding: 0;
-        overflow-y: hidden;
+        /* overflow-y: hidden; */
+        
+        /* solution from stack-overflow */
+        position: fixed;
+        inset: 0;
+        overflow: auto;
+
+        display: grid;
+        place-items: center;
     }
     
     .primary-header {
@@ -136,11 +145,11 @@
     
     /* || Layout */
     /* Body */
-    body {
+    /* body {
         display: flex;
         align-items: center;
         justify-content: center;
-    }
+    } */
     
     /* .primary-header */
     .primary-header {
