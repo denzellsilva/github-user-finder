@@ -19,8 +19,8 @@ if (!params.has('user') || user === '') {
 
 fetchAll([fetch(userUrl + user), fetch(reposUrl)])
   .then((data) => {
-    hideLoader();
-    populate(data);
+    // hideLoader();
+    // populate(data);
   })
   .catch((e) => {
     handleFetchError(e, () => {
