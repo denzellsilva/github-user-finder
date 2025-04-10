@@ -143,7 +143,7 @@ function ReposSection(repos) {
 
   const section = build(['section', { class: 'repos' }], 
   [
-    build(['h2'], ['Repositories']),
+    build(['h2'], ['Popular repositories']),
     build(['ul'], [...repos])
   ]);
   

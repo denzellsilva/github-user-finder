@@ -85,6 +85,10 @@
     .error span {
         padding-left: 3rem;
     }
+
+    a:hover {
+        text-decoration: none;
+    }
     
     /* || Typography */
     
@@ -97,7 +101,7 @@
         color: var(--main-font-color);
     }
 
-    h1, h2, .logo {
+    h1, h2, .logo, a {
         font-family: "Roboto", Arial, Helvetica, sans-serif;
         font-weight: 400;
         font-style: normal;
@@ -132,6 +136,10 @@
 
     .error span {
         color: rgb(255, 0, 0);
+    }
+
+    a {
+        color: var(--main-font-color);
     }
     
     /* || Layout */
