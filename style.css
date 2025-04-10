@@ -12,6 +12,7 @@
     /* || General Styles */
     html {
         box-sizing: border-box;
+        overflow: hidden;
     }
     
     *, *::before, *::after {
@@ -20,10 +21,8 @@
     
     body {
         background-color: var(--main-bg-color);
-        min-height: 100svh;
         margin: 0;
         padding: 0;
-        overflow-y: hidden;
     }
     
     .primary-header {
@@ -145,10 +144,13 @@
     /* || Layout */
     /* Body */
     body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+        /* stack-overflow solution: https://stackoverflow.com/questions/60657502/setting-height-to-100vh-works-but-i-get-a-scroll-bar-in-mobile-browsers */
+        position: fixed;
+        inset: 0;
+        overflow: auto;
+        display: grid;
+        place-items: center;
+    } 
     
     /* .primary-header */
     .primary-header {
@@ -268,8 +270,8 @@
 
 @layer populated-style {
     /* || General Styles */
-    .populated {
-        overflow-y: revert; /* goes back to browser's default overflow-y property value*/
+    html.profile-page {
+        overflow: revert;
     }
     
     .populated .primary-header {
@@ -315,6 +317,9 @@
         display: flex;
         align-items: start;
         justify-content: center;
+        position: revert;
+        inset: revert;
+        overflow: revert;
     }
     
     .populated .primary-header {
