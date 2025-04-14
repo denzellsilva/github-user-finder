@@ -1,3 +1,12 @@
+import { build } from './build.js';
+import { ProfileImage } from './components/ProfileImage.js';
+import { ProfileName } from './components/ProfileName.js';
+import { ProfileStats } from './components/ProfileStats.js';
+import { ProfileLink }  from './components/ProfileLink.js';
+import { ProfileBio } from './components/ProfileBio.js';
+import { ProfileAdditionalInfo } from './components/ProfileAdditionalInfo.js';
+import { ReposSection } from './components/ReposSection.js';
+
 export function basePath(path) {
   const host = document.location.hostname;
 
@@ -45,7 +54,7 @@ export function populate([data, userRepos]) {
         ProfileStats(data),
         ProfileLink(data),
         ProfileBio(data),
-        AdditionalInfo(data),
+        ProfileAdditionalInfo(data),
       ])
     ])
   ]);
@@ -60,62 +69,6 @@ export function populate([data, userRepos]) {
   }
 }
 
-function ProfileImage(data) {
-  return build(['img', { src: data['avatar_url'] }]);
-}
-
-function ProfileName(data) {
-  return build(['header'], 
-  [
-    build(['h1'], [data['name']])
-  ]);
-}
-
-function ProfileLink(data) {
-  return build(['h2'], 
-  [ 
-    build(['a', {href: `https://github.com/${data['login']}`, target: `blank`}], [`@${data['login']}`])
-  ]);
-}
-
-function ProfileBio(data) {
-  return build(['p'], [data['bio']]);
-}
-
-function ProfileStats(data) {
-  return build(['ul', { class: 'profile-stats' }],
-  [
-    build(['li'], [`${roundNumber(data['public_repos'])} repos`]),
-    build(['li'], [`${roundNumber(data['followers'])} followers`]),
-    build(['li'], [`${roundNumber(data['following'])} following`]),
-  ]);
-}
-
-function AdditionalInfo(data) {
-  return build(['ul'], 
-  [
-    data['location'] && build(['li'], 
-    [
-      `Location: ${data['location']}`
-    ]),
-    
-    data['company'] && build(['li'], 
-    [
-      `Company: ${data['company']}`,
-    ]),
-
-    data['blog'] && build(['li'], 
-    [
-      'Blog: ', build(['a', { href: data['blog'], target: 'blank' }], [data['blog']]),
-    ]),
-
-    data['twitter_username'] && build(['li'], 
-    [
-      'Twitter: ', build(['a', { href: `https://x.com/${data['twitter_username']}`, target: 'blank' }], [data['twitter_username'],]),
-    ]),
-  ]);
-}
-
 export function roundNumber(number) {
   if (number >= 1_000_000) {
     return (number / 1_000_000).toFixed(1) + 'M';
@@ -124,30 +77,6 @@ export function roundNumber(number) {
   } else {
     return Math.round(number).toString();
   }
-}
-
-function ReposSection(repos) {
-  repos = repos.map((repo) => {
-    const repoStars = roundNumber(repo['stargazers_count']);
-
-    const listItem = build(['li'], 
-    [
-      build(['a', { href: repo['html_url'], target: 'blank' }], [repo['name']]),
-      build(['p'], [`Stars: ${repoStars}`]),
-      repo['language'] && build(['p'], [repo['language']]),
-      repo['description'] && build(['p'], [repo['description']]),
-    ]);
-
-    return listItem;
-  });
-
-  const section = build(['section', { class: 'repos' }], 
-  [
-    build(['h2'], ['Popular repositories']),
-    build(['ul'], [...repos])
-  ]);
-  
-  return section;
 }
 
 export function errorShow(message = 'Invalid input.') {
@@ -194,58 +123,6 @@ export function handleFetchError(error, func) {
       console.log(error);
       break;
   }
-}
-
-// returns the line where a function is called,
-export function functionCallLine() {
-  const error = new Error();
-  const stackLine = error.stack.split("\n")[2]; // Get the caller's stack trace
-  return stackLine.trim();
-}
-
-// || The Build Function
-export function build([tag, attributes = {}], structure = []) {
-  const element = document.createElement(tag);
-
-  // checks if it's a valid html tag
-  if (element.toString() === '[object HTMLUnknownElement]') {
-    console.error(`Invalid HTML tag: ${tag} in build(). Called at: ${functionCallLine()}`);
-    return;
-  }
-
-  // loops through the attributes object and checks every attribute if it's a valid html attribute or else show an error
-  for (const attribute in attributes) {
-    if (attribute === 'class') {
-      element.className = attributes[attribute];
-    } else if (attribute in element || attribute.startsWith('data-')) {
-      element.setAttribute(attribute, attributes[attribute]);
-    } else {
-      console.error(`Invalid attribute: ${attribute} for tag <${tag}> in build(). Called at: ${functionCallLine()}`);
-      return;
-    }
-  }
-
-  // loops through the structure array and appends every node to the element
-  let previousNode; // tracks previous node
-  for (const node of structure) {
-    if (!node) {
-      continue;
-    } else if (node instanceof HTMLElement) {
-      // append the node if its an html element
-      element.appendChild(node);
-    } else if (typeof node === 'string') {
-      let textNode;
-      // if the previous node is a text, add a single space on creating the text node.
-      typeof previousNode === 'string' ? textNode = document.createTextNode(` ${node}`) : textNode = document.createTextNode(node);
-      element.appendChild(textNode);
-    } else {
-      console.error(`Invalid HTML node in array: ${node} in build(). Called at: ${functionCallLine()}`);
-    }
-    // updates previousNode value with the current value of node before iterating to the next loop
-    previousNode = node;
-  }
-
-  return element;
 }
 
 export function hideLoader() {
