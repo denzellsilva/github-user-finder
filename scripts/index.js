@@ -32,7 +32,7 @@ searchBtn.addEventListener('click', () => {
 
     promise
     .then(() => {
-      window.location.href = basePath(`/profile.html?user=${username}`);
+      window.location.href = basePath(`profile.html?user=${username}`);
     })
     .catch((e) => {
       handleFetchError(e, () => {
