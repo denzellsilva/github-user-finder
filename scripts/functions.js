@@ -7,15 +7,31 @@ import { ProfileBio } from './components/ProfileBio.js';
 import { ProfileAdditionalInfo } from './components/ProfileAdditionalInfo.js';
 import { ReposSection } from './components/ReposSection.js';
 
-export function basePath(path) {
+export function basePath(path = '/') {
   const host = document.location.hostname;
+  let basePath = '/';
 
-  if (host === 'denzellsilva.github.io') {
-    const basePath = '/github-user-finder';
+  function getPath(basePath, path) {
+    if (path === '/') {
+      return basePath;
+    }
+    
+    // if the path starts with a slash, remove it and add it to the base path
+    if (path.startsWith('/')) {
+      path = path.slice(1);
+      return basePath + path;
+    }
+    
     return basePath + path;
   }
+  
+  // get the right path for the current host
+  if (host === 'denzellsilva.github.io') {
+    basePath = '/github-user-finder/';
+    return getPath(basePath, path);
+  }
 
-  return path;
+  return getPath(basePath, path);
 }
 
 export async function fetchUser(request) {
