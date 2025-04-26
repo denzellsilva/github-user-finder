@@ -88,7 +88,7 @@
     a:hover {
         text-decoration: none;
     }
-    
+
     /* || Typography */
     
     body {
@@ -295,19 +295,47 @@
         border-bottom: 1px solid var(--main-border-color);
     }
 
-    li, p {
+    .additional-info li {
         margin: 0.7rem 0;
     }
-
+    
     .populated .error span {
         max-width: 43.5rem;
         padding: 0 0 0.5rem 1rem;
         margin: 0 auto;
     }
     
+    .bio, .profile-link {
+        margin: 1rem 0;
+    }
+    
+    .repos h2 {
+        margin-top: 5rem;
+        margin-bottom: 1rem;
+    }
+
+    .repo {
+        border: 1px solid var(--main-border-color);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+    }
+
+    .repo > * {
+        margin: 0;
+        margin-bottom: 0.3rem;
+    }
+
     /* || Typography */
     .populated h1 {
         font-size: 4.4rem;
+    }
+
+    .repo > * {
+        font-size: 1.5rem;
+    }
+
+    .repo a {
+        font-size: 2rem;
     }
 
     /* || Layout */
@@ -370,6 +398,12 @@
         gap: 0.8rem;
     }
 
+    .repos ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+        gap: 2rem;
+    }
+
     /* || Responsive */
     @media screen and (max-width: 480px) {
         /* || General Styles */
@@ -407,6 +441,13 @@
         /* || Layout */
         .profile-stats {
             gap: 2rem;
+        }
+    }
+
+    @media screen and (max-width: 817px) {
+        /* || General Styles */
+        .repos h2 {
+            margin-top: 2rem;
         }
     }
 }

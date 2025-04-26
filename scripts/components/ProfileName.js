@@ -3,6 +3,6 @@ import { build } from '../build.js';
 export function ProfileName(data) {
   return build(['header'], 
   [
-    build(['h1'], [data['name']])
+    build(['h1'], [ data['name'] ? data['name'] : data['login']])
   ]);
 }

@@ -5,7 +5,7 @@ export function ReposSection(repos) {
   repos = repos.map((repo) => {
     const repoStars = roundNumber(repo['stargazers_count']);
 
-    const listItem = build(['li'], 
+    const listItem = build(['li', { class: 'repo' }], 
     [
       build(['a', { href: repo['html_url'], target: 'blank' }], [repo['name']]),
       build(['p'], [`Stars: ${repoStars}`]),
