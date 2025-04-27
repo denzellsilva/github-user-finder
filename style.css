@@ -284,7 +284,7 @@
         width: 100%;
         max-width: 109rem;
         margin-top: 15rem;
-        padding: 0 2rem;
+        padding: 0 2rem 10rem 2rem;
     }
 
     .populated .search-box {
