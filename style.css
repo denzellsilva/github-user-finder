@@ -5,7 +5,11 @@
     font-size: 10px;
 }
 
-@layer initial-style, populated-style;
+@layer initial-style, populated-style, utilities;
+
+@layer utilities {
+
+}
 
 @layer initial-style {
     
@@ -139,11 +143,6 @@
 
     a {
         color: var(--main-font-color);
-    }
-
-    .additional-info img {
-        width: 2rem;
-        height: 2rem;
     }
     
     /* || Layout */
@@ -308,6 +307,18 @@
     .bio, .profile-link {
         margin: 1rem 0;
     }
+
+    .data-icon {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .star-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        position: relative;
+        top: -1px;
+    }
     
     .repos h2 {
         margin-top: 5rem;
@@ -325,17 +336,26 @@
         margin-bottom: 0.3rem;
     }
 
+    .repo .data-flex {
+        margin: 0;
+        margin-top: 0.5rem;
+    }
+
     /* || Typography */
     .populated h1 {
         font-size: 4.4rem;
     }
 
-    .repo > * {
+    .repo p {
         font-size: 1.5rem;
     }
 
     .repo a {
         font-size: 2rem;
+    }
+
+    .prog-lang {
+        color: var(--main-border-color);
     }
 
     /* || Layout */
@@ -352,6 +372,7 @@
         justify-content: space-between;
         position: fixed;
         top: 0;
+        z-index: 1;
     }
     
     .populated .primary-header > * {
@@ -392,7 +413,7 @@
         gap: 6rem;
     }
 
-    .additional-info li {
+    .data-flex {
         display: flex;
         align-items: center;
         gap: 0.8rem;
@@ -401,17 +422,25 @@
     .repos ul {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+        grid-auto-rows: minmax(13rem, auto);
         gap: 2rem;
+    }
+
+    .repo-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
     }
 
     /* || Responsive */
     @media screen and (max-width: 480px) {
         /* || General Styles */
         .populated main {
-            padding: 0 1.6rem;
+            padding: 0 1.6rem 5rem 1.6rem;
         }
 
-        .additional-info img {
+        .data-icon {
             width: 1.6rem;
             height: 1.6rem;
         }
@@ -438,9 +467,17 @@
             font-size: 1.6rem;
         }
 
+        .repo a {
+            font-size: 1.8rem;
+        }
+
         /* || Layout */
         .profile-stats {
             gap: 2rem;
+        }
+
+        .repos ul {
+            grid-template-columns: 1fr;
         }
     }
 

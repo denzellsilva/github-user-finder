@@ -26,8 +26,8 @@ searchBtn.addEventListener('click', () => {
     sessionStorage.setItem('error', 'Type a username.');
     window.location.href = basePath('/');
   } else {
-    // const userUrl = `../local-assets/kamranahmedse.json`;
-    const userUrl = `https://api.github.com/users/${username}`;
+    const userUrl = `../local-assets/kamranahmedse.json`;
+    // const userUrl = `https://api.github.com/users/${username}`;
     const promise = fetchUser(userUrl);
 
     promise

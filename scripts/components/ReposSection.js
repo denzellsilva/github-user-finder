@@ -8,13 +8,16 @@ export function ReposSection(repos) {
 
     const listItem = build(['li', { class: 'repo' }], 
     [
-      build(['a', { href: repo['html_url'], target: 'blank' }], [repo['name']]),
-      build(['p'], 
+      build(['header', {class: 'repo-header'}], 
       [
-        build(['img', { src: `${basePath('assets/star-icon.svg')}`, width: '20px', height: '20px' }]),
-        build(['span'], [repoStars])
+        build(['a', { href: repo['html_url'], target: 'blank' }], [repo['name']]),
+        build(['p', {class: 'data-flex'}], 
+        [
+          build(['img', { src: `${basePath('assets/star-icon.svg')}`, class: 'star-icon', alt: 'star icon' }]),
+          build(['span'], [repoStars])
+        ]),
       ]),
-      repo['language'] && build(['p'], [repo['language']]),
+      repo['language'] && build(['p', {class: 'prog-lang'}], [repo['language']]),
       repo['description'] && build(['p'], [repo['description']]),
     ]);
 

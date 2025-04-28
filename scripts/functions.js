@@ -9,8 +9,9 @@ import { ReposSection } from './components/ReposSection.js';
 
 export function basePath(path = '/') {
   const host = document.location.hostname;
-  let basePath = '/';
+  let basePath;
 
+  // returns the right path for the current basepath
   function getPath(basePath, path) {
     if (path === '/') {
       return basePath;
@@ -30,7 +31,8 @@ export function basePath(path = '/') {
     basePath = '/github-user-finder/';
     return getPath(basePath, path);
   }
-
+  
+  basePath = '/';
   return getPath(basePath, path);
 }
 
