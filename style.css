@@ -3,7 +3,9 @@
     --main-font-color: #e0e6eb;
     --main-border-color: #555c61;
     --main-font-size: 2rem;
-    --main-mobile-font-size: 1.6rem;
+    --main-font-size-mobile: 1.6rem;
+    --search-box-border-radius: 0.9rem; /* radius */
+    --search-box-border-radius-mobile: 0.7rem; /* */
     font-size: 10px;
 }
 
@@ -41,30 +43,29 @@
         height: 6.2rem;
         width: 100%;
         max-width: 43.5rem;
-        border-radius: 0.9rem;
         margin-top: 1rem;
     }
     
-    input {
+    .search-box input[type="text"] {
         min-width: 0;
         padding-left: var(--main-font-size);
         border-right: 1px solid var(--main-border-color);
-        border-radius: 0.9rem 0 0 0.9rem;
+        border-radius: var(--search-box-border-radius) 0 0 var(--search-box-border-radius);
     }
     
     .search-btn {
         width: 8rem;
-        border-radius: 0 0.9rem 0.9rem 0;
+        border-radius: 0 var(--search-box-border-radius) var(--search-box-border-radius) 0;
         border-left: none;
     }
     
-    button, input {
+    .search-box button, .search-box input[type="text"] {
         background-color: inherit;
         border: 1px solid var(--main-border-color);
         outline: 0 none;
     }
     
-    button:focus, input:focus {
+    .search-box button:focus, .search-box input[type="text"]:focus {
         border: 1px solid var(--main-font-color);
     }
 
@@ -274,8 +275,7 @@
 @layer populated-style {
     /* || General Styles */
     .populated .primary-header {
-        height: 11rem;
-        padding: 0 6rem;
+        padding: 2rem 6rem;
         max-width: 100%;
         margin: 0;
         background-color: inherit;
@@ -375,6 +375,7 @@
         position: fixed;
         top: 0;
         z-index: 1;
+        gap: 5rem;
     }
     
     .populated .primary-header > * {
@@ -393,7 +394,7 @@
     .populated .primary-header .img-logo {
         order: 3;
         display: flex;
-        justify-content: right;
+        justify-content: flex-end;
     }
 
     .populated .profile-header {
@@ -436,24 +437,93 @@
     }
 
     /* || Responsive */
-    @media screen and (max-width: 480px) {
-        /* || General Styles */
-        .populated main {
-            padding: 0 var(--main-mobile-font-size) 5rem var(--main-mobile-font-size);
+    @media screen and (max-width: 1050px) {
+        /* || Layout */
+        .populated .logo {
+            display: none;
         }
 
-        .data-icon {
-            width: var(--main-mobile-font-size);
-            height: var(--main-mobile-font-size);
+        .populated .primary-header .img-logo {
+            order: 1;
+            justify-content: flex-start;
+        }
+
+        /* added an invisible content in the primary header so that the search bar will stay on the center */
+        .populated .primary-header::after {
+            content: '';
+            flex: 1;
+            order: 3;
+        }
+    }
+    
+    @media screen and (max-width: 817px) {
+        /* || General Styles */
+        .repos h2 {
+            margin-top: 2rem;
+        }
+
+        .populated .search-box {
+            max-width: revert;
         }
 
         /* || Layout */
-        .profile-header {
-            flex-direction: column;
+        .populated .primary-header::after {
+            display: none; /* remove the invisible content to avoid cramped layout on the logo and search bar */
+        }
+
+        .populated .primary-header > * {
+            flex: revert;
+        }
+
+    }
+
+    @media screen and (max-width: 768px) {
+        /* || General Styles */
+        .populated .primary-header {
+            padding: 2rem 3rem;
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        /* || General Styles */
+        .populated main {
+            padding: 0 var(--main-font-size-mobile) 5rem var(--main-font-size-mobile);
+        }
+
+        .populated .primary-header {
+            padding: 2rem var(--main-font-size-mobile);
+        }
+
+        .populated .img-logo img {
+            width: 3.5rem;
+        }
+
+        .data-icon {
+            width: var(--main-font-size-mobile);
+            height: var(--main-font-size-mobile);
         }
 
         .content .profile-img {
             width: 25rem;
+        }
+
+        .populated .search-box {
+            height: 5rem;
+        }
+
+        .populated .search-btn {
+            width: 6rem;
+            border-radius: 0 var(--search-box-border-radius-mobile) var(--search-box-border-radius-mobile) 0;
+        }
+
+        .populated .search-btn img {
+            width: 1.6rem;
+        }
+
+        .populated .search-box input[type="text"] {
+            width: 100%;
+            padding-left: var(--main-font-size-mobile);
+            border-radius: var(--search-box-border-radius-mobile) 0 0 var(--search-box-border-radius-mobile);
         }
 
         /*|| Typography */
@@ -466,11 +536,11 @@
         }
 
         p, ul {
-            font-size: var(--main-mobile-font-size);
+            font-size: var(--main-font-size-mobile);
         }
 
         .repo a {
-            font-size: var(--main-mobile-font-size);
+            font-size: var(--main-font-size-mobile);
         }
 
         .repo p {
@@ -478,8 +548,16 @@
         }
 
         /* || Layout */
+        .profile-header {
+            flex-direction: column;
+        }
+
         .profile-stats {
             gap: 2rem;
+        }
+
+        .populated .primary-header {
+            gap: 3rem;
         }
 
         .repos ul {
@@ -489,13 +567,6 @@
 
         .repo .data-flex {
             margin-top: 0.1rem;
-        }
-    }
-
-    @media screen and (max-width: 817px) {
-        /* || General Styles */
-        .repos h2 {
-            margin-top: 2rem;
         }
     }
 }
