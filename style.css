@@ -2,6 +2,8 @@
     --main-bg-color: #1e272e;
     --main-font-color: #e0e6eb;
     --main-border-color: #555c61;
+    --main-font-size: 2rem;
+    --main-mobile-font-size: 1.6rem;
     font-size: 10px;
 }
 
@@ -32,7 +34,7 @@
     .primary-header {
         width: 100%;
         max-width: 45.5rem;
-        padding: 2rem;
+        padding: var(--main-font-size);
     }
     
     .search-box {
@@ -45,7 +47,7 @@
     
     input {
         min-width: 0;
-        padding-left: 2rem;
+        padding-left: var(--main-font-size);
         border-right: 1px solid var(--main-border-color);
         border-radius: 0.9rem 0 0 0.9rem;
     }
@@ -129,7 +131,7 @@
     }
 
     ul, p {
-        font-size: 2rem;
+        font-size: var(--main-font-size);
     }
 
     .content .profile-img {
@@ -283,7 +285,7 @@
         width: 100%;
         max-width: 109rem;
         margin-top: 15rem;
-        padding: 0 2rem 10rem 2rem;
+        padding: 0 var(--main-font-size) 10rem var(--main-font-size);
     }
 
     .populated .search-box {
@@ -309,8 +311,8 @@
     }
 
     .data-icon {
-        width: 2rem;
-        height: 2rem;
+        width: var(--main-font-size);
+        height: var(--main-font-size);
     }
 
     .star-icon {
@@ -351,7 +353,7 @@
     }
 
     .repo a {
-        font-size: 2rem;
+        font-size: var(--main-font-size);
     }
 
     .prog-lang {
@@ -423,7 +425,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
         grid-auto-rows: minmax(13rem, auto);
-        gap: 2rem;
+        gap: var(--main-font-size);
     }
 
     .repo-header {
@@ -437,12 +439,12 @@
     @media screen and (max-width: 480px) {
         /* || General Styles */
         .populated main {
-            padding: 0 1.6rem 5rem 1.6rem;
+            padding: 0 var(--main-mobile-font-size) 5rem var(--main-mobile-font-size);
         }
 
         .data-icon {
-            width: 1.6rem;
-            height: 1.6rem;
+            width: var(--main-mobile-font-size);
+            height: var(--main-mobile-font-size);
         }
 
         /* || Layout */
@@ -464,11 +466,15 @@
         }
 
         p, ul {
-            font-size: 1.6rem;
+            font-size: var(--main-mobile-font-size);
         }
 
         .repo a {
-            font-size: 1.8rem;
+            font-size: var(--main-mobile-font-size);
+        }
+
+        .repo p {
+            font-size: 1.4rem;
         }
 
         /* || Layout */
@@ -478,6 +484,11 @@
 
         .repos ul {
             grid-template-columns: 1fr;
+            grid-auto-rows: minmax(12rem, auto);
+        }
+
+        .repo .data-flex {
+            margin-top: 0.1rem;
         }
     }
 
