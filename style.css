@@ -342,7 +342,7 @@
     }
 
     .prog-lang {
-        color: var(--main-border-color);
+        color: #b2c1cd;
     }
 
     .populated .primary-header.with-error {
