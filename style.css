@@ -93,6 +93,10 @@
         text-decoration: none;
     }
 
+    .home-link:hover {
+        cursor: pointer;
+    }
+
     /* || Typography */
     
     body {
@@ -347,10 +351,6 @@
 
     .populated .primary-header.with-error {
         padding-bottom: 3.5rem;
-    }
-
-    .logo a {
-        text-decoration: none;
     }
 
     /* || Layout */

@@ -4,6 +4,7 @@ const searchForm = document.querySelector('.search-box');
 const searchBtn = document.querySelector('.search-btn');
 const searchInput = document.querySelector('.search-box input');
 const params = new URLSearchParams(window.location.search);
+const homeLinks = document.querySelectorAll('.home-link');
 const user = params.get('user');
 const userUrl = 'https://api.github.com/users/';
 const reposUrl = `https://api.github.com/search/repositories?q=user:${user}&sort=stars&order=desc`;
@@ -28,6 +29,12 @@ fetchAll([fetch(userUrl + user), fetch(reposUrl)])
       window.location.href = basePath('/');
     });
   });
+
+for (const link of homeLinks) {
+  link.addEventListener('click', () => {
+    window.location.href = basePath('/');
+  });
+}
 
 // remove default form submission behavior
 searchForm.addEventListener('submit', e => e.preventDefault());
