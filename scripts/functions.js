@@ -100,18 +100,26 @@ export function roundNumber(number) {
 export function errorShow(message = 'Invalid input.') {
   errorRemove();
 
-  const primaryHeader = document.querySelector('.primary-header');
-  
-  const newError = build(['div', { class: 'error' }], 
-  [
-    build(['span'], [message]),
-  ]);
-  
-  primaryHeader.appendChild(newError);
+  const searchBox = document.querySelector('.search-box');
+  const error = build(['span', {class: 'error'}], [message]);
+  const primaryHeader = document.querySelector('.populated .primary-header'); // only reference the primary header in populated body
+
+  // this only works on the populated body
+  if (!primaryHeader.getAttribute('class').includes('with-error')) {
+    primaryHeader.className = `${primaryHeader.getAttribute('class')} with-error`;
+  }
+
+  searchBox.appendChild(error);
 }
 
 export function errorRemove() {
   const error = document.querySelector('.error');
+  const primaryHeader = document.querySelector('.populated .primary-header'); // only reference the primary header in populated body
+  
+  // this only works on the populated body
+  if (primaryHeader.getAttribute('class').includes('with-error')) {
+    primaryHeader.className = primaryHeader.getAttribute('class').replace(' with-error', '');
+  }
 
   if (error) {
     error.parentNode.removeChild(error);
@@ -135,7 +143,12 @@ export function handleFetchError(error, func) {
       // 403 error means the API rate limit has been exceeded
       errorShow('API rate limit exceeded. Try again later.');
       break;
-  
+    
+    case 'Failed to fetch':
+      sessionStorage.setItem('error', `${error.message} due to possibly poor connection.`);
+      window.location.href = basePath('/');
+      break;
+
     default:
       // other errors are logged to the console
       console.log(error);
