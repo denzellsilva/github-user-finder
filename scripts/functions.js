@@ -160,3 +160,9 @@ export function hideLoader() {
   const loader = document.querySelector('.cssload-container');
   loader.parentNode.removeChild(loader);
 }
+
+export function isValidGitHubUsername(username) {
+  // GitHub username regex: 1-39 characters, alphanumeric, hyphen, no leading or trailing hyphen
+  const usernameRegex = /^(?!-)[a-zA-Z0-9-]{1,39}(?<!-)$/;
+  return usernameRegex.test(username);
+}

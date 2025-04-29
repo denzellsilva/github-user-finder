@@ -1,4 +1,4 @@
-import { basePath, fetchUser, errorShow, handleFetchError } from "./functions.js";
+import { basePath, fetchUser, errorShow, handleFetchError, isValidGitHubUsername } from "./functions.js";
 
 const searchForm = document.querySelector('.search-box');
 const searchBtn = document.querySelector('.search-btn');
@@ -24,6 +24,9 @@ searchBtn.addEventListener('click', () => {
 
   if (username === '') {
     sessionStorage.setItem('error', 'Type a username.');
+    window.location.href = basePath('/');
+  } else if (!isValidGitHubUsername(username)) {
+    sessionStorage.setItem('error', 'Invalid username.');
     window.location.href = basePath('/');
   } else {
     // const userUrl = `../local-assets/kamranahmedse.json`;

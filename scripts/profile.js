@@ -1,4 +1,4 @@
-import { basePath, fetchAll, fetchUser, errorShow, handleFetchError, hideLoader, populate } from "./functions.js";
+import { basePath, fetchAll, fetchUser, errorShow, handleFetchError, hideLoader, populate, isValidGitHubUsername } from "./functions.js";
 
 const searchForm = document.querySelector('.search-box');
 const searchBtn = document.querySelector('.search-btn');
@@ -15,6 +15,11 @@ const reposUrl = `https://api.github.com/search/repositories?q=user:${user}&sort
 // whitelisting the url - redirect to '/' if the url doesn't have a 'user' parameter
 if (!params.has('user') || user === '') {
   sessionStorage.setItem('error', 'Type a username.')
+  window.location.href = basePath('/');
+}
+
+if (!isValidGitHubUsername(user)) {
+  sessionStorage.setItem('error', 'Invalid username.');
   window.location.href = basePath('/');
 }
 
@@ -44,6 +49,8 @@ searchBtn.addEventListener('click', () => {
 
   if (username === '') {
     errorShow('Type a username.');
+  } else if (!isValidGitHubUsername(username)) {
+    errorShow('Invalid username.');
   } else {
     const promise = fetchUser(userUrl + username);
   
