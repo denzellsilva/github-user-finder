@@ -163,6 +163,6 @@ export function hideLoader() {
 
 export function isValidGitHubUsername(username) {
   // GitHub username regex: 1-39 characters, alphanumeric, allow hyphens but no consecutive hyphens (--), or no hyphens at the beginning or end of the username.
-  const usernameRegex = /^(?!-)[a-zA-Z0-9-]{1,39}(?<!-)$/;
+  const usernameRegex = /^(?!-)(?!.*--)[a-zA-Z0-9-]{1,39}(?<!-)$/;
   return usernameRegex.test(username);
 }
