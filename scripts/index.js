@@ -20,7 +20,7 @@ if (sessionError) {
 searchForm.addEventListener('submit', e => e.preventDefault());
 
 searchBtn.addEventListener('click', () => {
-  const username =  searchInput.value.toString();
+  const username =  searchInput.value.toString().replaceAll(' ', '');
 
   if (username === '') {
     sessionStorage.setItem('error', 'Type a username.');

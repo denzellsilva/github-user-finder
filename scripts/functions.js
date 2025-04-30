@@ -12,26 +12,26 @@ function getPath(basePath, path) {
   if (path === '/') {
     return basePath;
   }
-  
+
   // if the path starts with a slash, remove it and add it to the base path
   if (path.startsWith('/')) {
     path = path.slice(1);
     return basePath + path;
   }
-  
+
   return basePath + path;
 }
 
 export function basePath(path = '/') {
   const host = document.location.hostname;
   let basePath;
-  
+
   // get the right path for the current host
   if (host === 'denzellsilva.github.io') {
     basePath = '/github-user-finder/';
     return getPath(basePath, path);
   }
-  
+
   basePath = '/';
   return getPath(basePath, path);
 }
@@ -53,7 +53,7 @@ export async function fetchAll(requests) {
   if (!responses[0].ok) {
     throw new Error(`HTTP error: ${responses[0].status}`);
   }
-  
+
   const data = await Promise.all(responses.map(response => response.json()));
   return data;
 }
@@ -115,7 +115,7 @@ export function errorShow(message = 'Invalid input.') {
 export function errorRemove() {
   const error = document.querySelector('.error');
   const primaryHeader = document.querySelector('.populated .primary-header'); // only reference the primary header in populated body
-  
+
   // this only works on the populated body
   if (primaryHeader && primaryHeader.getAttribute('class').includes('with-error')) {
     primaryHeader.className = primaryHeader.getAttribute('class').replace(' with-error', '');
@@ -133,17 +133,17 @@ export function handleFetchError(error, func) {
       // call the callback function if the error is 404 - this means the user is not found
       func();
       break;
-  
+
     case 'HTTP error: 422':
       // 422 error means the resources do not exist or you do not have permission to view them
       console.error('The resources do not exist or you do not have permission to view them.');
       break;
-  
+
     case 'HTTP error: 403':
       // 403 error means the API rate limit has been exceeded
       errorShow('API rate limit exceeded. Try again later.');
       break;
-    
+
     case 'Failed to fetch':
       sessionStorage.setItem('error', `${error.message} due to possibly poor connection.`);
       window.location.href = basePath('/');

@@ -29,6 +29,6 @@ export function ReposSection(repos) {
     build(['h2'], ['Popular repositories']),
     build(['ul'], [...repos])
   ]);
-  
+
   return section;
 }

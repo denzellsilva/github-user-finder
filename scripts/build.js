@@ -43,7 +43,7 @@ export function build([tag, attributes = {}], structure = []) {
     } else {
       console.error(`Invalid HTML node in array: ${node} in build(). Called at: ${functionCallLine()}`);
     }
-    
+
     // updates previousNode value with the current value of node before iterating to the next loop
     previousNode = node;
   }
