@@ -104,12 +104,14 @@ export function errorShow(message = 'Invalid input.') {
   const error = build(['span', {class: 'error'}], [message]);
   const primaryHeader = document.querySelector('.populated .primary-header'); // only reference the primary header in populated body
 
-  // this only works on the populated body
-  if (primaryHeader && !primaryHeader.getAttribute('class').includes('with-error')) {
-    primaryHeader.className = `${primaryHeader.getAttribute('class')} with-error`;
-  }
-
-  searchBox.appendChild(error);
+  setTimeout(() => {
+    // this only works on the populated body
+    if (primaryHeader && !primaryHeader.getAttribute('class').includes('with-error')) {
+      primaryHeader.className = `${primaryHeader.getAttribute('class')} with-error`;
+    }
+  
+    searchBox.appendChild(error);
+  }, 20)
 }
 
 export function errorRemove() {
