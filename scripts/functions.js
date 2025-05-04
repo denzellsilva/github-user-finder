@@ -111,7 +111,13 @@ export function errorShow(message = 'Invalid input.') {
     }
   
     searchBox.appendChild(error);
-  }, 20)
+  }, 20);
+
+  setTimeout(() => {
+    if (error.parentNode) {
+      error.parentNode.removeChild(error);
+    }
+  }, 5000);
 }
 
 export function errorRemove() {
