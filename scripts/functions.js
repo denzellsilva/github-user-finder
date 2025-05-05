@@ -123,14 +123,17 @@ export function errorShow(message = 'Invalid input.') {
 export function errorRemove(error = document.querySelector('.error')) {
   const primaryHeader = document.querySelector('.populated .primary-header'); // only reference the primary header in populated body
 
-  // check also the parent node of the error if it exists before removing it because the error might not be in the DOM yet
-  if (error && error.parentNode) {
-    error.parentNode.removeChild(error);
+  // check if the error exists because sometimes we call this function before the error is created
+  // check also the parent node of the error if it exists because the error might not be in the DOM anymore
+  if (!(error && error.parentNode)) {
+    return;
+  }
 
-    // this only works on the populated body
-    if (primaryHeader && primaryHeader.getAttribute('class').includes('with-error')) {
-      primaryHeader.className = primaryHeader.getAttribute('class').replace('with-error', '').trim();
-    }
+  error.parentNode.removeChild(error);
+
+  // this only works on the populated body
+  if (primaryHeader && primaryHeader.getAttribute('class').includes('with-error')) {
+    primaryHeader.className = primaryHeader.getAttribute('class').replace('with-error', '').trim();
   }
 }
 
