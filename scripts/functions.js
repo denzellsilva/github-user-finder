@@ -98,39 +98,39 @@ export function roundNumber(number) {
 }
 
 export function errorShow(message = 'Invalid input.') {
-  errorRemove();
-
   const searchBox = document.querySelector('.search-box');
-  const error = build(['span', {class: 'error'}], [message]);
+  const newError = build(['span', {class: 'error'}], [message]);
   const primaryHeader = document.querySelector('.populated .primary-header'); // only reference the primary header in populated body
 
+  errorRemove();
+
+  // Add a delay in appending newError so that the removal of the old error is noticeable, this would create a flicker effect
   setTimeout(() => {
     // this only works on the populated body
     if (primaryHeader && !primaryHeader.getAttribute('class').includes('with-error')) {
       primaryHeader.className = `${primaryHeader.getAttribute('class')} with-error`;
     }
   
-    searchBox.appendChild(error);
+    searchBox.appendChild(newError);
   }, 20);
 
+  // remove the error after 5 seconds
   setTimeout(() => {
-    if (error.parentNode) {
-      error.parentNode.removeChild(error);
-    }
+    errorRemove(newError);
   }, 5000);
 }
 
-export function errorRemove() {
-  const error = document.querySelector('.error');
+export function errorRemove(error = document.querySelector('.error')) {
   const primaryHeader = document.querySelector('.populated .primary-header'); // only reference the primary header in populated body
 
-  // this only works on the populated body
-  if (primaryHeader && primaryHeader.getAttribute('class').includes('with-error')) {
-    primaryHeader.className = primaryHeader.getAttribute('class').replace(' with-error', '');
-  }
-
-  if (error) {
+  // check also the parent node of the error if it exists before removing it because the error might not be in the DOM yet
+  if (error && error.parentNode) {
     error.parentNode.removeChild(error);
+
+    // this only works on the populated body
+    if (primaryHeader && primaryHeader.getAttribute('class').includes('with-error')) {
+      primaryHeader.className = primaryHeader.getAttribute('class').replace('with-error', '').trim();
+    }
   }
 }
 
