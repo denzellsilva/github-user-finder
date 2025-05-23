@@ -2,7 +2,7 @@ import { build } from './build.js';
 import { ProfileImage } from './components/ProfileImage.js';
 import { ProfileName } from './components/ProfileName.js';
 import { ProfileStats } from './components/ProfileStats.js';
-import { ProfileLink }  from './components/ProfileLink.js';
+import { ProfileLink } from './components/ProfileLink.js';
 import { ProfileBio } from './components/ProfileBio.js';
 import { ProfileAdditionalInfo } from './components/ProfileAdditionalInfo.js';
 import { ReposSection } from './components/ReposSection.js';
@@ -61,26 +61,30 @@ export async function fetchAll(requests) {
 export function populate([data, userRepos]) {
   const main = document.querySelector('main');
 
-  const content = build(['div', { class: 'content'}], 
-  [
-    build(['header', { class: 'profile-header' }], 
+  const content = build(['div', { class: 'content' }],
     [
-      ProfileImage(data),
-      build(['section', { class: 'profile-info' }], 
-      [
-        ProfileName(data),
-        ProfileStats(data),
-        ProfileLink(data),
-        ProfileBio(data),
-        ProfileAdditionalInfo(data),
-      ])
-    ])
-  ]);
+      build(['header', { class: 'profile-header' }],
+        [
+          ProfileImage(data),
+          build(['section', { class: 'profile-info' }],
+            [
+              ProfileName(data),
+              ProfileStats(data),
+              ProfileLink(data),
+              ProfileBio(data),
+              ProfileAdditionalInfo(data),
+            ])
+        ])
+    ]);
 
   main.appendChild(content);
 
   // only show the repos section if there are any repos
-  if (userRepos.items) {
+  if (!userRepos.items) {
+    return;
+  }
+
+  if (userRepos.items.length > 0) {
     const popularRepos = userRepos.items.slice(0, 6);
     const reposSection = ReposSection(popularRepos);
     main.appendChild(reposSection);
@@ -99,7 +103,7 @@ export function roundNumber(number) {
 
 export function errorShow(message = 'Invalid input.') {
   const searchBox = document.querySelector('.search-box');
-  const newError = build(['span', {class: 'error'}], [message]);
+  const newError = build(['span', { class: 'error' }], [message]);
   const primaryHeader = document.querySelector('.populated .primary-header'); // only reference the primary header in populated body
 
   errorRemove();
@@ -110,7 +114,7 @@ export function errorShow(message = 'Invalid input.') {
     if (primaryHeader && !primaryHeader.getAttribute('class').includes('with-error')) {
       primaryHeader.className = `${primaryHeader.getAttribute('class')} with-error`;
     }
-  
+
     searchBox.appendChild(newError);
   }, 20);
 
