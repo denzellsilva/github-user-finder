@@ -7,7 +7,7 @@ const params = new URLSearchParams(window.location.search);
 const homeLinks = document.querySelectorAll('.home-link');
 const user = params.get('user');
 const userUrl = 'https://api.github.com/users/';
-const reposUrl = `https://api.github.com/search/repositories?q=user:${user}&sort=stars&order=desc`;
+const reposUrl = `https://api.github.com/search/repositories?q=user:${encodeURIComponent(user)}&sort=stars&order=desc`;
 // const user = `kamranahmedse.json`;
 // const userUrl = `../local-assets/`;
 // const reposUrl = `../local-assets/kamranahmedse-repos.json`;
