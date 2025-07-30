@@ -1,11 +1,4 @@
-import { build } from './build.js';
-import { ProfileImage } from './components/ProfileImage.js';
-import { ProfileName } from './components/ProfileName.js';
-import { ProfileStats } from './components/ProfileStats.js';
-import { ProfileLink } from './components/ProfileLink.js';
-import { ProfileBio } from './components/ProfileBio.js';
-import { ProfileAdditionalInfo } from './components/ProfileAdditionalInfo.js';
-import { ReposSection } from './components/ReposSection.js';
+import { MainContent } from './components/MainContent.js';
 
 // returns the right path for the current basepath
 function getPath(basePath, path) {
@@ -60,35 +53,7 @@ export async function fetchAll(requests) {
 
 export function populate([data, userRepos]) {
   const main = document.querySelector('main');
-
-  const content = build(['div', { class: 'content' }],
-    [
-      build(['header', { class: 'profile-header' }],
-        [
-          ProfileImage(data),
-          build(['section', { class: 'profile-info' }],
-            [
-              ProfileName(data),
-              ProfileStats(data),
-              ProfileLink(data),
-              ProfileBio(data),
-              ProfileAdditionalInfo(data),
-            ])
-        ])
-    ]);
-
-  main.appendChild(content);
-
-  // only show the repos section if there are any repos
-  if (!userRepos.items) {
-    return;
-  }
-
-  if (userRepos.items.length > 0) {
-    const popularRepos = userRepos.items.slice(0, 6);
-    const reposSection = ReposSection(popularRepos);
-    main.appendChild(reposSection);
-  }
+  main.innerHTML += MainContent(data, userRepos);
 }
 
 export function roundNumber(number) {
@@ -103,8 +68,11 @@ export function roundNumber(number) {
 
 export function errorShow(message = 'Invalid input.') {
   const searchBox = document.querySelector('.search-box');
-  const newError = build(['span', { class: 'error' }], [message]);
   const primaryHeader = document.querySelector('.populated .primary-header'); // only reference the primary header in populated body
+  const newError = document.createElement('span');
+
+  newError.className = 'error';
+  newError.textContent = message;
 
   errorRemove();
 
