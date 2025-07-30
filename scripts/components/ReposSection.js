@@ -12,8 +12,8 @@ export function ReposSection(repos) {
             <span>${repoStars}</span>
           </p>
         </header>
-        ${repo['language'] && `<p class="prog-lang">${repo['language']}</p>`}
-        ${repo['description'] && `<p>${repo['description']}</p>`}
+        ${repo['language'] ? `<p class="prog-lang">${repo['language']}</p>` : ''}
+        ${repo['description'] ? `<p>${repo['description']}</p>` : ''}
       </li>
     `;
   });

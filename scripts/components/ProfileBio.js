@@ -1,3 +1,3 @@
 export function ProfileBio(data) {
-  return `<p class="bio">${data['bio'] ? data['bio'] : 'No bio available'}</p>`;
+  return `${data['bio'] ? `<p class="profile-bio">${data['bio']}</p>` : ''}`;
 }
