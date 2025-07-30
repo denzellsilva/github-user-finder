@@ -1,34 +1,29 @@
-import { build } from "../build.js";
-import { roundNumber } from "../functions.js";
-import { basePath } from "../functions.js";
+import { roundNumber, basePath } from "../functions.js";
 
 export function ReposSection(repos) {
   repos = repos.map((repo) => {
     const repoStars = roundNumber(repo['stargazers_count']);
-
-    const listItem = build(['li', { class: 'repo' }], 
-    [
-      build(['header', {class: 'repo-header'}], 
-      [
-        build(['a', { href: repo['html_url'], target: 'blank' }], [repo['name']]),
-        build(['p', {class: 'data-flex'}], 
-        [
-          build(['img', { src: `${basePath('assets/star-icon.svg')}`, class: 'star-icon', alt: 'star icon' }]),
-          build(['span'], [repoStars])
-        ]),
-      ]),
-      repo['language'] && build(['p', {class: 'prog-lang'}], [repo['language']]),
-      repo['description'] && build(['p'], [repo['description']]),
-    ]);
-
-    return listItem;
+    return `
+      <li class="repo">
+        <header class="repo-header">
+          <a href="${repo['html_url']}" target="_blank" rel="noopener noreferrer">${repo['name']}</a>
+          <p class="data-flex">
+            <img src="${basePath('assets/star-icon.svg')}" class="star-icon" alt="star icon">
+            <span>${repoStars}</span>
+          </p>
+        </header>
+        ${repo['language'] ? `<p class="prog-lang">${repo['language']}</p>` : ''}
+        ${repo['description'] ? `<p>${repo['description']}</p>` : ''}
+      </li>
+    `;
   });
 
-  const section = build(['section', { class: 'repos' }], 
-  [
-    build(['h2'], ['Popular repositories']),
-    build(['ul'], [...repos])
-  ]);
-
-  return section;
+  return `
+    <section class="repos">
+      <h2>Popular repositories</h2>
+      <ul>
+        ${repos.join('')}
+      </ul>
+    </section>
+  `;
 }

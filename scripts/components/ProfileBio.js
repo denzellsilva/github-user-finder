@@ -1,5 +1,3 @@
-import { build } from "../build.js";
-
 export function ProfileBio(data) {
-  return build(['p', {class: 'bio'}], [data['bio']]);
+  return `${data['bio'] ? `<p class="profile-bio">${data['bio']}</p>` : ''}`;
 }

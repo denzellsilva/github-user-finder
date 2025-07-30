@@ -131,7 +131,7 @@
         font-size: var(--main-font-size);
     }
 
-    .content .profile-img {
+    .profile-img {
         width: 39rem;
         border-radius: 50%;
     }
@@ -491,7 +491,7 @@
             height: var(--main-font-size-mobile);
         }
 
-        .content .profile-img {
+        .profile-img {
             width: 25rem;
         }
 
