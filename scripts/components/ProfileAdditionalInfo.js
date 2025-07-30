@@ -18,13 +18,13 @@ export function ProfileAdditionalInfo(data) {
       ${data['blog'] ? `
         <li class="data-flex">
           <img src="${basePath('assets/link-icon.svg')}" class="data-icon" alt="link icon">
-          <a href="${data['blog']}" target="blank">${data['blog']}</a>
+          <a href="${data['blog']}" target="_blank">${data['blog']}</a>
         </li>
       ` : ''}
       ${data['twitter_username'] ? `
         <li class="data-flex">  
           <img src="${basePath('assets/twitter-icon.svg')}" class="data-icon" alt="twitter icon">
-          <a href="https://x.com/${data['twitter_username']}" target="blank">${data['twitter_username']}</a>
+          <a href="https://x.com/${data['twitter_username']}" target="_blank">${data['twitter_username']}</a>
         </li>
       ` : ''}
     </ul>
