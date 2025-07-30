@@ -6,7 +6,7 @@ export function ReposSection(repos) {
     return `
       <li class="repo">
         <header class="repo-header">
-          <a href="${repo['html_url']}" target="_blank">${repo['name']}</a>
+          <a href="${repo['html_url']}" target="_blank" rel="noopener noreferrer">${repo['name']}</a>
           <p class="data-flex">
             <img src="${basePath('assets/star-icon.svg')}" class="star-icon" alt="star icon">
             <span>${repoStars}</span>
