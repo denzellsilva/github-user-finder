@@ -1,4 +1,4 @@
-import { roundNumber, basePath } from "../functions.js";
+import { roundNumber, basePath, escapeChars } from "../functions.js";
 
 export function ReposSection(repos) {
   repos = repos.map((repo) => {
@@ -6,14 +6,14 @@ export function ReposSection(repos) {
     return `
       <li class="repo">
         <header class="repo-header">
-          <a href="${repo['html_url']}" target="_blank" rel="noopener noreferrer">${repo['name']}</a>
+          <a href="${repo['html_url']}" target="_blank" rel="noopener noreferrer">${escapeChars(repo['name'])}</a>
           <p class="data-flex">
             <img src="${basePath('assets/star-icon.svg')}" class="star-icon" alt="star icon">
             <span>${repoStars}</span>
           </p>
         </header>
-        ${repo['language'] ? `<p class="prog-lang">${repo['language']}</p>` : ''}
-        ${repo['description'] ? `<p>${repo['description']}</p>` : ''}
+        ${repo['language'] ? `<p class="prog-lang">${escapeChars(repo['language'])}</p>` : ''}
+        ${repo['description'] ? `<p>${escapeChars(repo['description'])}</p>` : ''}
       </li>
     `;
   });

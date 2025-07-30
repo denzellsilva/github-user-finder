@@ -149,3 +149,12 @@ export function isValidGitHubUsername(username) {
   const usernameRegex = /^(?!-)(?!.*--)[a-zA-Z0-9-]{1,39}(?<!-)$/;
   return usernameRegex.test(username);
 }
+
+export function escapeChars(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
