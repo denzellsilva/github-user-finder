@@ -1,5 +1,3 @@
-import { build } from "../build.js";
-
 export function ProfileBio(data) {
-  return build(['p', {class: 'bio'}], [data['bio']]);
+  return `<p class="bio">${data['bio'] ? data['bio'] : 'No bio available'}</p>`;
 }

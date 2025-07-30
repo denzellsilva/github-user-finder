@@ -1,8 +1,3 @@
-import { build } from '../build.js';
-
 export function ProfileName(data) {
-  return build(['header'], 
-  [
-    build(['h1'], [ data['name'] ? data['name'] : data['login']])
-  ]);
+  return `<h1 class="profile-name">${data['name'] ? data['name'] : data['login']}</h1>`;
 }
