@@ -6,6 +6,8 @@ const searchInput = document.querySelector('.search-box input');
 const sessionError = sessionStorage.getItem('error');
 const params = new URLSearchParams(window.location.search);
 
+// sample new code()
+
 // whitelisting the url - redirect to '/' if the url have parameters
 if (params.toString()) {
   window.location.href = basePath('/');
