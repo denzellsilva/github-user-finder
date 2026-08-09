@@ -12,6 +12,8 @@ const reposUrl = `https://api.github.com/search/repositories?q=user:${encodeURIC
 // const userUrl = `../local-assets/`;
 // const reposUrl = `../local-assets/kamranahmedse-repos.json`;
 
+// another sample new code
+
 // whitelisting the url - redirect to '/' if the url doesn't have a 'user' parameter
 if (!params.has('user') || user === '') {
   sessionStorage.setItem('error', 'Type a username.')
